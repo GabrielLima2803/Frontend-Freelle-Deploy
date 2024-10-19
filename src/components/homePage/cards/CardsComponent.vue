@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useCategoriasStore } from '@/stores';
-import PreLoader from '../../loading/PreLoader'; 
+import PreLoader from '@/components/loading/PreLoader.vue'; 
 
 const categoriaStore = useCategoriasStore();
 const categorias = computed(() => categoriaStore.categorias); 

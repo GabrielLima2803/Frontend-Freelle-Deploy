@@ -1,3 +1,3 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'freelle.onrender.com/api/'
+axios.defaults.baseURL = 'https://freelle.onrender.com/api/'
