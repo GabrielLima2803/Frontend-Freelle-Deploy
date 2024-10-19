@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useCategoriasStore } from '@/stores';
+import PreLoader from '../../loading/PreLoader'; 
 
 const categoriaStore = useCategoriasStore();
 const categorias = computed(() => categoriaStore.categorias); 
 const currentIndex = ref(0);
+const isLoading = ref(true); 
 
 const next = () => {
   if (categorias.value.length) {
@@ -28,9 +30,10 @@ const handleResize = () => {
   isSmallScreen.value = window.innerWidth <= 768;
 };
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener('resize', handleResize);
-  categoriaStore.getAllCategorias();
+  await categoriaStore.getAllCategorias(); 
+  isLoading.value = false; 
 });
 
 onBeforeUnmount(() => {
@@ -39,48 +42,51 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="card-section" v-if="categorias && categorias.length"> 
-    <div class="card-container">
-      <div class="arrow left" @click="prev" v-if="isSmallScreen || isMediumScreen">‹</div>
-      <div class="carousel" v-if="isSmallScreen || isMediumScreen">
-        <div class="cards">
-          <div 
-            v-for="(card, index) in (isMediumScreen ? categorias.slice(currentIndex, currentIndex + 6) : categorias.slice(currentIndex, currentIndex + 3))" 
-            :key="index" 
-            class="card">
-            <router-link v-if="card.nome === 'Design Gráfico'" :to="{ name: 'design' }" class="router-link">
-              <div class="icon-title">
+  <div>
+    <PreLoader v-if="isLoading" /> 
+    <div class="card-section" v-if="!isLoading && categorias && categorias.length"> 
+      <div class="card-container">
+        <div class="arrow left" @click="prev" v-if="isSmallScreen || isMediumScreen">‹</div>
+        <div class="carousel" v-if="isSmallScreen || isMediumScreen">
+          <div class="cards">
+            <div 
+              v-for="(card, index) in (isMediumScreen ? categorias.slice(currentIndex, currentIndex + 6) : categorias.slice(currentIndex, currentIndex + 3))" 
+              :key="index" 
+              class="card">
+              <router-link v-if="card.nome === 'Design Gráfico'" :to="{ name: 'design' }" class="router-link">
+                <div class="icon-title">
+                  <i :class="card.icon" class="card-icon"></i>
+                  <h3 class="card-title">{{ card.nome }}</h3>
+                </div>
+              </router-link>
+              <div v-else class="icon-title">
                 <i :class="card.icon" class="card-icon"></i>
                 <h3 class="card-title">{{ card.nome }}</h3>
               </div>
-            </router-link>
-            <div v-else class="icon-title">
-              <i :class="card.icon" class="card-icon"></i>
-              <h3 class="card-title">{{ card.nome }}</h3>
             </div>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <div class="cards">
-          <div 
-            v-for="(card, index) in categorias" 
-            :key="index" 
-            class="card">
-            <router-link v-if="card.title === 'Design Gráfico'" :to="{ name: 'design' }">
-              <div class="icon-title">
+        <div v-else>
+          <div class="cards">
+            <div 
+              v-for="(card, index) in categorias" 
+              :key="index" 
+              class="card">
+              <router-link v-if="card.title === 'Design Gráfico'" :to="{ name: 'design' }">
+                <div class="icon-title">
+                  <i :class="card.icon" class="card-icon"></i>
+                  <h3 class="card-title">{{ card.nome }}</h3>
+                </div>
+              </router-link>
+              <div v-else class="icon-title">
                 <i :class="card.icon" class="card-icon"></i>
                 <h3 class="card-title">{{ card.nome }}</h3>
               </div>
-            </router-link>
-            <div v-else class="icon-title">
-              <i :class="card.icon" class="card-icon"></i>
-              <h3 class="card-title">{{ card.nome }}</h3>
             </div>
           </div>
         </div>
+        <div class="arrow right" @click="next" v-if="isSmallScreen || isMediumScreen">›</div>
       </div>
-      <div class="arrow right" @click="next" v-if="isSmallScreen || isMediumScreen">›</div>
     </div>
   </div>
 </template>
@@ -169,5 +175,4 @@ onBeforeUnmount(() => {
   color: inherit;
   text-decoration: none;
 }
-
 </style>
