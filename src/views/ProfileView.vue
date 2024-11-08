@@ -3,10 +3,10 @@ import {ProfilePage,HeaderLoggedPage, FooterComponent} from '@/components';
 </script>
 
 <template>
-          <HeaderLoggedPage/>
+        <HeaderLoggedPage/>
         <ProfilePage/>
         <FooterComponent/> 
-<template/>
+</template>
 
 <style scoped>
 

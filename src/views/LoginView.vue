@@ -1,13 +1,28 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
 
 const isSmallScreen = ref(false);
 const username = ref('');
 const password = ref('');
+const errorMessage = ref('');
+const authStore = useAuthStore();
+const router = useRouter();
 
 const checkScreenSize = () => {
   isSmallScreen.value = window.innerWidth <= 768;
+};
+
+const login = async () => {
+  try {
+    await authStore.LoginUser({ value: username.value, password: password.value });
+    router.push('/home-logged');
+  } catch (error) {
+    errorMessage.value = 'Falha no login. Verifique seu e-mail e senha.';
+    console.error('Login failed', error);
+  }
 };
 
 onMounted(() => {
@@ -17,9 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
@@ -29,9 +42,7 @@ onMounted(() => {
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="login" class="wrapForm">
-          <!-- "Olá!" alinhado à esquerda -->
           <h4 class="TextLeft">Olá!</h4>
-          <!-- Texto "Para continuar, digite seu e-mail" alinhado à esquerda -->
           <p class="FormPLeft">Para continuar, digite seu e-mail</p>
 
           <div class="input-container">
@@ -41,7 +52,7 @@ onMounted(() => {
               class="inputForm"
               v-model="username"
             />
-            <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail</label>
+            <label for="username" class="labelForm">E-mail ou Username</label>
           </div>
           <div class="input-container">
             <input
@@ -50,7 +61,7 @@ onMounted(() => {
               class="marginForm inputForm"
               v-model="password"
             />
-            <label for="password" :class="{'active': password !== ''}" class="labelForm">Senha</label>
+            <label for="password" class="labelForm">Senha</label>
           </div>
 
           <button type="button" style="margin-top: 10px" class="btnSenha">
@@ -61,14 +72,16 @@ onMounted(() => {
             <button type="button" class="btnCriar mt-3">Criar conta</button>
           </router-link>
           <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
+
+          <!-- Exibe a mensagem de erro caso ocorra uma falha no login -->
+          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         </form>
       </div>
     </div>
   </div>
+
   <div class="footer">
-    <!-- Footer Grande (escondido em telas pequenas) -->
     <footer-component v-if="!isSmallScreen" />
-    <!-- Footer Pequeno (exibido apenas em telas pequenas) -->
     <footer-small v-if="isSmallScreen" />
   </div>
 </template>
