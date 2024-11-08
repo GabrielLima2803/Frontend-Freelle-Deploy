@@ -34,6 +34,16 @@ const register = async () => {
     console.error('Erro no registro:', error);
   }
 };
+
+const setLabelActive = (inputId) => {
+  const input = document.getElementById(inputId);
+  const label = input.nextElementSibling;
+  if (input.value || input === document.activeElement) {
+    label.classList.add('active');
+  } else {
+    label.classList.remove('active');
+  }
+};
 </script>
 
 <template>
@@ -45,24 +55,24 @@ const register = async () => {
 
     <div class="containerPrincipal">
       <div class="FormBot">
-        <form @submit.prevent="register" class="wrapForm"> <!-- Altere para chamar o método register -->
+        <form @submit.prevent="register" class="wrapForm">
           <h4 class="TextLeft">Olá!</h4>
           <p class="FormPLeft">Faça o seu cadastro por aqui!</p>
 
           <div class="input-container">
-            <input type="text" id="username" v-model="username" class="inputForm" />
+            <input type="text" id="username" v-model="username" class="inputForm" @focus="setLabelActive('username')" @blur="setLabelActive('username')" />
             <label for="username" class="labelForm">Digite seu nome...</label>
           </div>
           <div class="input-container">
-            <input type="email" id="email" v-model="email" class="inputForm" />
+            <input type="email" id="email" v-model="email" class="inputForm" @focus="setLabelActive('email')" @blur="setLabelActive('email')" />
             <label for="email" class="labelForm">Digite seu email...</label>
           </div>
           <div class="input-container">
-            <input type="password" id="password" v-model="password" class="inputForm" />
+            <input type="password" id="password" v-model="password" class="inputForm" @focus="setLabelActive('password')" @blur="setLabelActive('password')" />
             <label for="password" class="labelForm">Crie sua senha...</label>
           </div>
           <div class="input-container">
-            <input type="password" id="password-confirm" v-model="passwordConfirm" class="inputForm" />
+            <input type="password" id="password-confirm" v-model="passwordConfirm" class="inputForm" @focus="setLabelActive('password-confirm')" @blur="setLabelActive('password-confirm')" />
             <label for="password-confirm" class="labelForm">Confirme sua senha...</label>
           </div>
 
@@ -108,7 +118,6 @@ body {
   margin-top: 10px;
   font-size: 14px;
 }
-
 
 .containerPrincipal {
   width: 440px;
@@ -216,3 +225,4 @@ body {
   }
 }
 </style>
+

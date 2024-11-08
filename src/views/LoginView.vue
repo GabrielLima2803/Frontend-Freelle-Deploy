@@ -1,8 +1,8 @@
 <script setup>
+import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
 
 const isSmallScreen = ref(false);
 const username = ref('');
@@ -32,7 +32,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
+  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
@@ -42,7 +44,9 @@ onMounted(() => {
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="login" class="wrapForm">
+          <!-- "Olá!" alinhado à esquerda -->
           <h4 class="TextLeft">Olá!</h4>
+          <!-- Texto "Para continuar, digite seu e-mail" alinhado à esquerda -->
           <p class="FormPLeft">Para continuar, digite seu e-mail</p>
 
           <div class="input-container">
@@ -52,7 +56,7 @@ onMounted(() => {
               class="inputForm"
               v-model="username"
             />
-            <label for="username" class="labelForm">E-mail ou Username</label>
+            <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail ou Username</label>
           </div>
           <div class="input-container">
             <input
@@ -61,7 +65,7 @@ onMounted(() => {
               class="marginForm inputForm"
               v-model="password"
             />
-            <label for="password" class="labelForm">Senha</label>
+            <label for="password" :class="{'active': password !== ''}" class="labelForm">Senha</label>
           </div>
 
           <button type="button" style="margin-top: 10px" class="btnSenha">
@@ -79,13 +83,17 @@ onMounted(() => {
       </div>
     </div>
   </div>
-
+  
   <div class="footer">
+    <!-- Footer Grande (escondido em telas pequenas) -->
     <footer-component v-if="!isSmallScreen" />
+    <!-- Footer Pequeno (exibido apenas em telas pequenas) -->
     <footer-small v-if="isSmallScreen" />
   </div>
 </template>
+
 <style scoped>
+/* Estilos gerais */
 body {
   background: #006B63;
   height: 100vh;
@@ -97,6 +105,7 @@ body {
   font-family: 'Arial', sans-serif;
 }
 
+/* Container principal */
 .wrapContainer {
   display: flex;
   flex-direction: column;
@@ -121,8 +130,9 @@ body {
   margin-bottom: 20px;
 }
 
+/* Texto de saudação */
 .TextLeft {
-  font-size: bold;
+  font-weight: bold;
   text-align: left;
 }
 
@@ -130,6 +140,7 @@ body {
   text-align: left;
 }
 
+/* Inputs */
 .input-container {
   position: relative;
   margin-top: 30px;
@@ -148,6 +159,7 @@ body {
 .inputForm.active + .labelForm {
   top: -10px;
   font-size: 12px;
+  color: #006B63;
 }
 
 .labelForm {
@@ -165,6 +177,7 @@ body {
   font-size: 12px;
 }
 
+/* Botões */
 .btnLogin, .btnCriar {
   width: 100%;
   height: 45px;
@@ -191,6 +204,7 @@ body {
   color: white;
 }
 
+/* Botão de recuperação de senha */
 .btnSenha {
   margin-top: 20px;
   border: none;
@@ -206,11 +220,19 @@ body {
   transition: 0.7s;
 }
 
+/* Texto informativo */
 .Pf {
   font-size: 12px;
   margin-top: 30px;
 }
 
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Footer */
 .footer {
   background: #006B63;
 }

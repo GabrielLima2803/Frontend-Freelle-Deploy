@@ -6,7 +6,7 @@ import LoginView from '@/views/LoginView.vue';
 import PrestadoresView from '@/views/PrestadoresView.vue'
 import UpdateProfile from '@/components/ProfilePage/UpdateProfile.vue';
 import JobView from '@/views/JobView.vue';
-import CadastroUsuario from '@/components/auth/CadastroUsuario.vue';
+import CadastroView from '@/views/CadastroView.vue';
 import RecuperacaoSenha from '@/components/auth/RecuperacaoSenha.vue';
 import ValidacaoSenha from '@/components/auth/ValidacaoSenha.vue';
 import AdicaoProjeto from '@/components/ProjectAdd/AdicaoProjeto.vue';
@@ -46,7 +46,7 @@ const router = createRouter({
     {
       path: '/cadastro',
       name: 'Cadastro',
-      component: CadastroUsuario
+      component: CadastroView
     },
     {
       path: '/recuperacao',

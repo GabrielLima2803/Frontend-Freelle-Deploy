@@ -31,9 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
@@ -49,11 +47,11 @@ onMounted(() => {
             <input
               type="email"
               id="email"
-              class="marginForm inputForm"
-              v-model="email" 
+              class="inputForm"
+              v-model="email"
               required
             />
-            <label for="email" class="labelForm">Digite seu email</label>
+            <label for="email" class="labelForm" :class="{ 'active': email }">Digite seu email</label>
           </div>
 
           <button type="submit" class="btnCriar mt-3">Enviar Código</button>
@@ -62,7 +60,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  
+
   <footer-component v-if="!isSmallScreen" class="footer"/>
   <footer-small v-if="isSmallScreen" />
 </template>
