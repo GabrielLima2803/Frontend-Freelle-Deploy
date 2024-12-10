@@ -2,10 +2,10 @@
 import { ref, computed, onMounted } from 'vue';
 
 const cards = [
-  { title: 'Desenvolvimento de Sites', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156477/website-development.png', bgColor: 'green-bg' },
-  { title: 'Logotipo', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156494/logo-design.png', bgColor: 'orange-bg' },
-  { title: 'SEO', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156488/seo.png', bgColor: 'dark-green-bg' },
-  { title: 'Arquitetura e Design de Interiores', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156473/architecture-design.png', bgColor: 'brown-bg' }
+  { title: 'Programação e Tecnologia', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156477/website-development.png', bgColor: 'green-bg' },
+  { title: 'Design Gráfico', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156494/logo-design.png', bgColor: 'orange-bg' },
+  { title: 'Negócios', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156488/seo.png', bgColor: 'dark-green-bg' },
+  { title: 'Consultoria', image: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_188,dpr_1.0/v1/attachments/generic_asset/asset/798403f5b92b1b5af997acc704a3d21c-1702465156473/architecture-design.png', bgColor: 'brown-bg' }
 ];
 
 const currentIndex = ref(0);

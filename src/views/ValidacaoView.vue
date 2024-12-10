@@ -14,7 +14,6 @@
         <form @submit.prevent="login" class="wrapForm">
           <h4 class="Text">Digite o Código</h4>
           <div class="code-container mt-3">
-            <!-- Primeiro grupo de três inputs -->
             <input
               v-for="(input, index) in 3"
               :key="index"

@@ -41,7 +41,7 @@ onMounted(() => {
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="forgotPassword" class="wrapForm">
-          <h4 class="Text">Esqueceu sua senha?</h4>
+          <h4 class="Text">Esqueci Minha Senha</h4>
 
           <div class="input-container">
             <input
@@ -89,9 +89,10 @@ body {
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 740px;
+  height: 400px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
@@ -107,12 +108,12 @@ body {
 
 .input-container {
   position: relative;
-  margin-top: 30px;
+  margin-top: 60px;
 }
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
   border: 1px solid #006B63;
   outline: none;
@@ -139,18 +140,13 @@ body {
 .btnCriar {
   width: 100%;
   height: 45px;
-  margin-top: 18px;
-  font-size: 18px;
+  margin-top: 60px;
+  font-size: 16px;
   font-weight: bold;
-  background-color: white;
-  border: 2px solid #006B63;
-  color: #006B63;
-  transition: all 0.3s ease;
-}
-
-.btnCriar:hover {
   background-color: #006B63;
+  border: none;
   color: white;
+  transition: all 0.3s ease;
 }
 
 .Pf {

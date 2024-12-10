@@ -75,9 +75,8 @@ const resetPassword = async () => {
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="resetPassword" class="wrapForm">
-          <h4 class="Text">Digite o código que foi enviado no email</h4>
+          <h2 class="text">Digite o Código</h2>
           <div class="code-container mt-3">
-            <!-- Código de redefinição em 6 campos -->
             <input
               v-for="(input, index) in 6"
               :key="index"
@@ -142,9 +141,10 @@ const resetPassword = async () => {
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 640px;
+  height: 740px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
@@ -155,58 +155,65 @@ const resetPassword = async () => {
   margin-bottom: 20px;
 }
 
+.text{
+  margin-top: 50px;
+}
+
 .input-container {
   position: relative;
-  margin-top: 28px;
+  margin: 30px;
 }
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
   border: 1px solid #006B63;
   outline: none;
   transition: all 0.3s;
 }
 
-.inputForm:focus + .labelForm {
+.inputForm:focus + .labelForm,
+.labelForm.active {
   top: -10px;
   font-size: 12px;
+  color: #006B63;
 }
 
 .labelForm {
   position: absolute;
   top: 50%;
   left: 15px;
+  font-size: 12px;
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
+  color: #666;
 }
 
 .btnAtualizar {
   background-color: #006B63;
   color: white;
   border: none;
-  width: 100%;
+  width: 89%;
   height: 45px;
-  margin-top: 15px;
+  margin-top: 35px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .Pf {
   font-size: 12px;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 
-/* Estilos para os quadrados do código */
 .code-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  padding: 50px;
 }
 
 .code-input {
@@ -214,13 +221,12 @@ const resetPassword = async () => {
   height: 50px;
   font-size: 24px;
   text-align: center;
-  border: 1px solid #006B63;
-  border-radius: 5px;
+  border: 1px solid #bebebe;
   outline: none;
 }
 
 .code-input:focus {
-  border-color: #000;
+  border-color: #006B63;
 }
 
 .separator {
@@ -229,7 +235,6 @@ const resetPassword = async () => {
   color: #006B63;
 }
 
-/* Estilos para telas pequenas */
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;

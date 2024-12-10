@@ -1,13 +1,12 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
-import { useRoute } from 'vue-router';  // Para acessar os parâmetros da rota
-import { useCategoriasStore } from '@/stores';  // Para acessar as categorias
+import { useRoute } from 'vue-router';  
+import { useCategoriasStore } from '@/stores'; 
 
 const categoriaStore = useCategoriasStore();
 const categorias = computed(() => categoriaStore.categorias);
 const currentIndex = ref(0);
 
-// Acesso à rota para pegar o parametro categoriaId da URL
 const route = useRoute();
 const currentCategoriaId = computed(() => route.params.categoriaId); 
 
@@ -35,7 +34,7 @@ const handleResize = () => {
 
 onMounted(() => {
   window.addEventListener('resize', handleResize);
-  categoriaStore.getAllCategorias(); // Certifique-se de que as categorias são carregadas
+  categoriaStore.getAllCategorias();
 });
 
 onBeforeUnmount(() => {

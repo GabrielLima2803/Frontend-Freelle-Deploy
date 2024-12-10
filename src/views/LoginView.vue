@@ -32,9 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
@@ -44,9 +42,7 @@ onMounted(() => {
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="login" class="wrapForm">
-          <!-- "Olá!" alinhado à esquerda -->
           <h4 class="TextLeft">Olá!</h4>
-          <!-- Texto "Para continuar, digite seu e-mail" alinhado à esquerda -->
           <p class="FormPLeft">Para continuar, digite seu e-mail</p>
 
           <div class="input-container">
@@ -69,15 +65,17 @@ onMounted(() => {
           </div>
 
           <button type="button" style="margin-top: 10px" class="btnSenha">
-            <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
-          </button>
+  <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
+</button>
+
+<!-- Linha horizontal abaixo do botão -->
+<hr class="custom-hr" />
           <button type="submit" class="btnLogin mt-3">Entrar</button>
           <router-link to="/cadastro">
-            <button type="button" class="btnCriar mt-3">Criar conta</button>
+            <button type="button" class="btnCriar mt-3">Criar Login</button>
           </router-link>
           <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
 
-          <!-- Exibe a mensagem de erro caso ocorra uma falha no login -->
           <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         </form>
       </div>
@@ -85,15 +83,12 @@ onMounted(() => {
   </div>
   
   <div class="footer">
-    <!-- Footer Grande (escondido em telas pequenas) -->
     <footer-component v-if="!isSmallScreen" />
-    <!-- Footer Pequeno (exibido apenas em telas pequenas) -->
     <footer-small v-if="isSmallScreen" />
   </div>
 </template>
 
 <style scoped>
-/* Estilos gerais */
 body {
   background: #006B63;
   height: 100vh;
@@ -105,7 +100,6 @@ body {
   font-family: 'Arial', sans-serif;
 }
 
-/* Container principal */
 .wrapContainer {
   display: flex;
   flex-direction: column;
@@ -117,9 +111,10 @@ body {
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 760px;
+  height: 560px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
@@ -130,7 +125,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* Texto de saudação */
 .TextLeft {
   font-weight: bold;
   text-align: left;
@@ -140,7 +134,6 @@ body {
   text-align: left;
 }
 
-/* Inputs */
 .input-container {
   position: relative;
   margin-top: 30px;
@@ -148,9 +141,9 @@ body {
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
-  border: 1px solid #006B63;
+  border: 0.3px solid #006B63;
   outline: none;
   transition: all 0.3s;
 }
@@ -169,7 +162,7 @@ body {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .labelForm.active {
@@ -177,11 +170,10 @@ body {
   font-size: 12px;
 }
 
-/* Botões */
 .btnLogin, .btnCriar {
   width: 100%;
   height: 45px;
-  margin-top: 15px;
+  margin-top: 25px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -194,9 +186,10 @@ body {
 
 .btnCriar {
   background-color: white;
-  border: 2px solid #006B63;
+  border: 0.5px solid #006B63;
   color: #006B63;
   transition: all 0.3s ease;
+  margin-top: 25px;
 }
 
 .btnCriar:hover {
@@ -204,15 +197,14 @@ body {
   color: white;
 }
 
-/* Botão de recuperação de senha */
 .btnSenha {
-  margin-top: 20px;
   border: none;
-  border-bottom: solid 1px #006B63;
-  background-color: white;
-  color: gray;
-  font-size: 15px;
   text-decoration: none;
+  background-color: white;
+  color: rgb(149, 146, 146);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .btnSenha:hover {
@@ -220,7 +212,14 @@ body {
   transition: 0.7s;
 }
 
-/* Texto informativo */
+.custom-hr {
+  display: block; 
+  border: none; 
+  border-top: 1.5px solid #006B63; 
+  margin: 1px auto;
+  width: 35%; 
+}
+
 .Pf {
   font-size: 12px;
   margin-top: 30px;
@@ -232,12 +231,10 @@ body {
   margin-top: 10px;
 }
 
-/* Footer */
 .footer {
   background: #006B63;
 }
 
-/* Estilos para telas pequenas */
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;

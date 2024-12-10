@@ -76,7 +76,7 @@ const setLabelActive = (inputId) => {
             <label for="password-confirm" class="labelForm">Confirme sua senha...</label>
           </div>
 
-          <button type="submit" class="btnCriar">Criar conta</button>
+          <button type="submit" class="btnCriar">Criar Login</button>
 
           <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
           <p class="FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
@@ -120,10 +120,12 @@ body {
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 760px;
+  height: 660px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -139,11 +141,12 @@ body {
 
 .input-container {
   position: relative;
-  margin-top: 20px;
+  margin-top: 35px; 
 }
 
 .inputForm {
   width: 100%;
+  height: 60px;
   padding: 15px;
   border: 1px solid #006B63;
   outline: none;
@@ -154,6 +157,7 @@ body {
 .labelForm.active {
   top: -10px;
   font-size: 12px;
+  color: #006B63;
 }
 
 .labelForm {
@@ -163,23 +167,18 @@ body {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
+  font-size: 12px;
 }
 
 .btnCriar {
   width: 100%;
   height: 45px;
-  margin-top: 20px;
-  font-size: 18px;
+  margin-top: 40px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  background-color: white;
-  border: 2px solid #006B63;
-  color: #006B63;
-  transition: all 0.3s ease;
-}
-
-.btnCriar:hover {
   background-color: #006B63;
+  border: none;
   color: white;
 }
 
