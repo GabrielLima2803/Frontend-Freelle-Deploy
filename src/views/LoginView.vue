@@ -37,7 +37,6 @@ onMounted(() => {
 
   <div class="wrapContainer">
     <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
     </div>
     <div class="containerPrincipal">
       <div class="FormBot">
@@ -68,7 +67,6 @@ onMounted(() => {
   <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
 </button>
 
-<!-- Linha horizontal abaixo do botão -->
 <hr class="custom-hr" />
           <button type="submit" class="btnLogin mt-3">Entrar</button>
           <router-link to="/cadastro">
@@ -118,11 +116,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
-}
-
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
 }
 
 .TextLeft {

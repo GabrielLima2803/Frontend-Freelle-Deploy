@@ -38,12 +38,14 @@ onMounted(() => {
       <div class="arrow left" @click="prev" v-if="isSmallScreen || isMediumScreen">‹</div>
       <div class="carousel" v-if="isSmallScreen || isMediumScreen">
         <div class="cards">
+          <router-link :to="{ name: 'categorias-projetos', params: { categoriaId: card.id } }" class="router-link">
           <div v-for="(card, index) in (isMediumScreen ? cards.slice(currentIndex, currentIndex + 2) : cards.slice(currentIndex, currentIndex + 1))" :key="index" :class="'card ' + card.bgColor">
             <img :src="card.image" alt="card image" class="card-image" />
             <div class="card-content">
               <h3>{{ card.title }}</h3>
             </div>
           </div>
+        </router-link>
         </div>
       </div>
       <div v-else>

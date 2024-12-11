@@ -1,5 +1,5 @@
 <script setup>
-import { HeaderComponent, HeaderSmall } from "@/components";
+import { HeaderComponent, HeaderSmall, FooterComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';  
 import { useRouter } from 'vue-router';
@@ -14,7 +14,6 @@ const resetData = ref({
 
 const authStore = useAuthStore();
 
-// Verifica o tamanho da tela
 const checkScreenSize = () => {
   isSmallScreen.value = window.innerWidth <= 768;
 };
@@ -24,7 +23,6 @@ onMounted(() => {
   window.addEventListener('resize', checkScreenSize);
 });
 
-// Função para mover o foco entre os campos de código
 const moveFocus = (event, currentIndex) => {
   const inputs = document.querySelectorAll('.code-input');
   if (event.target.value !== "" && currentIndex < inputs.length - 1) {
@@ -34,7 +32,6 @@ const moveFocus = (event, currentIndex) => {
   }
 };
 
-// Função para redefinir a senha
 const resetPassword = async () => {
   const codeString = resetData.value.code.join(''); 
 
@@ -63,15 +60,11 @@ const resetPassword = async () => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
-    <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-    </div>
+    <div class="FormTop">    </div>
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="resetPassword" class="wrapForm">
@@ -116,6 +109,9 @@ const resetPassword = async () => {
       </div>
     </div>
   </div>
+
+  <footer-component v-if="!isSmallScreen" class="footer"/>
+  <footer-small v-if="isSmallScreen" />
 </template>
 
 <style scoped>
@@ -138,6 +134,7 @@ const resetPassword = async () => {
   width: 100%;
   min-height: 100vh;
   background: #006B63;
+  padding-top: 80px;
 }
 
 .containerPrincipal {
@@ -148,11 +145,6 @@ const resetPassword = async () => {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
-}
-
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
 }
 
 .text{
@@ -184,12 +176,12 @@ const resetPassword = async () => {
   position: absolute;
   top: 50%;
   left: 15px;
-  font-size: 12px;
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
   color: #666;
 }
+
 
 .btnAtualizar {
   background-color: #006B63;
@@ -233,6 +225,10 @@ const resetPassword = async () => {
   font-size: 24px;
   font-weight: bold;
   color: #006B63;
+}
+
+.footer {
+  background: #006B63;
 }
 
 @media (max-width: 768px) {

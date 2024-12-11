@@ -36,7 +36,6 @@ onMounted(() => {
 
   <div class="wrapContainer">
     <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo" />
     </div>
     <div class="containerPrincipal">
       <div class="FormBot">
@@ -85,7 +84,7 @@ body {
   width: 100%;
   min-height: 90vh;
   background: #006B63;
-  padding-top: 20px;
+  padding-top: 150px;
 }
 
 .containerPrincipal {
@@ -97,11 +96,6 @@ body {
   margin-bottom: 20px;
   text-align: center;
 }
-
-.logo {
-  width: 80px;
-}
-
 .Text {
   font-size: 18px;
 }

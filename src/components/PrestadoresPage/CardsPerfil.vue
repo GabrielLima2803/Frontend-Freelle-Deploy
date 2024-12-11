@@ -24,7 +24,6 @@ export default {
 
 <template>
   <div class="profile-container">
-    <!-- Esquerda: Perfil e Detalhes -->
     <div class="profile-left">
       <div class="profile-header">
         <img :src="provider.image" alt="Profile Image" class="profile-image" />
@@ -64,20 +63,6 @@ export default {
           <p><i class="mdi mdi-palette"></i> {{ provider.expertise }}</p>
         </div>
       </div>
-    </div>
-
-    <!-- Direita: Card de Contato (oculto em telas pequenas) -->
-    <div class="contact-card">
-      <button class="favorite-btn">
-        <i class="mdi mdi-heart-outline"></i>
-      </button>
-      <div class="contact-content">
-        <h2 class="contact-name">{{ provider.name }}</h2>
-        <p class="username">{{ provider.username }}</p>
-      </div>
-      <button class="contact-btn">
-        <i class="mdi mdi-send"></i> Entrar em Contato
-      </button>
     </div>
   </div>
 </template>

@@ -19,11 +19,8 @@ onMounted(() => {
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
-    <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-
     <div class="containerPrincipal">
       <p class="update-text">Precisa criar um projeto? <a href="#">Ir para os meus projetos</a></p>
-
       <div class="project-form-container">
         <div class="project-image">
           <p>Imagem do projeto +</p>
@@ -31,34 +28,12 @@ onMounted(() => {
 
         <form @submit.prevent="submitProject" class="wrapForm">
           <div class="input-container">
-            <label for="title">Título</label>
-            <input type="text" id="title" class="inputForm" placeholder="Digite seu título..." />
-          </div>
-
-          <div class="input-container">
-            <label for="description">Descrição</label>
-            <input type="text" id="description" class="inputForm" placeholder="Descreva seu projeto..." />
-          </div>
-
-          <div class="input-container">
-            <label for="payment">Pagamento</label>
-            <input type="text" id="payment" class="inputForm" placeholder="ex: 1.200..." />
-          </div>
-
-          <div class="input-container
-">
-            <label for="deadline">Data Limite</label>
-            <input type="date" id="deadline" class="inputForm" />
-          </div>
-
-          <div class="input-container">
             <label for="category">Categoria</label>
             <select id="category" class="inputForm">
               <option value="">Selecione a categoria...</option>
               <option value="design">Design</option>
               <option value="desenvolvimento">Desenvolvimento</option>
               <option value="marketing">Marketing</option>
-              <!-- Adicione outras opções de categoria conforme necessário -->
             </select>
           </div>
 
@@ -94,11 +69,6 @@ body {
   width: 100%;
   padding: 20px;
   background-color: #006B63;
-}
-
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
 }
 
 .containerPrincipal {

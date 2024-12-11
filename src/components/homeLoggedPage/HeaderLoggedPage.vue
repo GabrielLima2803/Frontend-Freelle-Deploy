@@ -5,14 +5,7 @@
         <router-link to="/home-logged" class="btn">
           <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="img" />
         </router-link>
-
-        <div class="search-container">
-          <input v-model="searchQuery" type="text" class="search-input" placeholder="Pesquise..." />
-          <button class="search-button">
-            <i class="mdi mdi-magnify"></i>
-          </button>
         </div>
-      </div>
 
       <div class="header-right">
         <button class="btn">Português</button>
@@ -98,39 +91,6 @@ const searchQuery = ref('')
 .img {
   width: 63px;
   height: 60px;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  background-color: #cfd8dc;
-  border-radius: 0.5em;
-  padding: 0.3em;
-  width: 70%;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.search-input {
-  flex: 1;
-  padding: 0.8em;
-  border: none;
-  outline: none;
-  border-radius: 0.5em 0 0 0.5em;
-  font-size: 1em;
-  background-color: #e0e0e0;
-}
-
-.search-button {
-  padding: 0.5em;
-  background-color: #006b63;
-  border: none;
-  border-radius: 0.5em;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 1.2em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .header-right {

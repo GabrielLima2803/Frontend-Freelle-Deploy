@@ -51,8 +51,6 @@ const setLabelActive = (inputId) => {
   <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
-    <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="register" class="wrapForm">
@@ -127,11 +125,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
-}
-
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
 }
 
 .TextLeft,
