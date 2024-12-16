@@ -1,7 +1,6 @@
 import FooterComponent from "@/components/MainComponents/footer/FooterComponent.vue";
 import FooterSmall from "@/components/MainComponents/footer/FooterSmall.vue";
 import HeaderComponent from "@/components/MainComponents/header/HeaderComponent.vue";
-import HeaderSmall from "@/components/MainComponents/header/HeaderSmall.vue";
 import CardsComponent from "@/components/homePage/cards/CardsComponent.vue";
 import CardServicos from "@/components/homePage/cards/CardServicos.vue";
 import CardsPrestadores from "@/components/homePage/cards/CardsPrestadores.vue";
@@ -18,12 +17,13 @@ import ContentLoggedPage from "./homeLoggedPage/ContentLoggedPage.vue";
 import CardJob from "./jobPage/CardJob.vue";
 import CardUser from "./jobPage/CardUser.vue";
 import ProfilePage from "./ProfilePage/ProfilePage.vue";
+import FooterPrincipalComponent from "./MainComponents/footer/FooterPrincipalComponent.vue";
+import CardJobPerfil from "./PrestadoresPage/CardJobPerfil.vue";
 
 export {
     FooterComponent,
     FooterSmall,
     HeaderComponent,
-    HeaderSmall,
     CardsComponent,
     CardServicos,
     CardsPrestadores,
@@ -39,5 +39,8 @@ export {
     ContentLoggedPage,
     CardJob,
     CardUser,
-    ProfilePage
+    ProfilePage,
+    FooterPrincipalComponent,
+    CardJobPerfil,
+
 };
