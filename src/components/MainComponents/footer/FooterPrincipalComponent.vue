@@ -41,7 +41,7 @@
     font-weight: bold;
     font-size: 26px;
     padding-left: 15px;
-    color: #D4D4D4;
+    color: #006b63;
 }
 .social{
     padding-right: 15px;
@@ -60,7 +60,7 @@
     bottom: 0;
     width: 75%;
     height: 2px;
-    background-color: #D4D4D4;
+    background-color: #006b63;
     transform: translateX(-50%);
 }
 
@@ -70,12 +70,12 @@
 }
 .container-bottom > p {
     font-size: 12px;
-    color: #D4D4D4;
+    color: #006b63;
 }
 
 i {
     font-size: 28px;
     margin: 0 5px;
-    color: #D4D4D4;
+    color: #006b63;
 }
 </style>

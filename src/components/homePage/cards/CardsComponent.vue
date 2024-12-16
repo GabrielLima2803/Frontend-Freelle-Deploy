@@ -1,13 +1,12 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
-import { useRoute } from 'vue-router';  // Para acessar os parâmetros da rota
-import { useCategoriasStore } from '@/stores';  // Para acessar as categorias
+import { useRoute } from 'vue-router'; 
+import { useCategoriasStore } from '@/stores'; 
 
 const categoriaStore = useCategoriasStore();
 const categorias = computed(() => categoriaStore.categorias);
 const currentIndex = ref(0);
 
-// Acesso à rota para pegar o parametro categoriaId da URL
 const route = useRoute();
 const currentCategoriaId = computed(() => route.params.categoriaId); 
 
@@ -35,7 +34,7 @@ const handleResize = () => {
 
 onMounted(() => {
   window.addEventListener('resize', handleResize);
-  categoriaStore.getAllCategorias(); // Certifique-se de que as categorias são carregadas
+  categoriaStore.getAllCategorias();
 });
 
 onBeforeUnmount(() => {
@@ -96,17 +95,21 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: center;
   position: relative;
-  overflow: hidden; 
+  overflow: hidden;
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-left: 60px; 
-  padding-right: 60px; 
+  padding-left: 60px;
+  padding-right: 60px;
+  max-width: 100%; 
+  box-sizing: border-box; 
 }
 
 .cards {
   display: flex;
-  gap: 20px; 
+  gap: 20px;
+  flex-wrap: nowrap; 
 }
+
 
 .card {
   background-color: white;
@@ -127,8 +130,8 @@ onBeforeUnmount(() => {
 }
 
 .active-card {
-  border: 2px solid #006b63;
-  box-shadow: 0px 8px 16px rgba(0, 123, 255, 0.2); /* Sombra mais forte */
+  border: 1px solid #006b63;
+  box-shadow: 0px 8px 16px rgba(0, 123, 255, 0.2); 
 }
 
 .icon-title {
@@ -150,21 +153,36 @@ onBeforeUnmount(() => {
 
 .arrow {
   cursor: pointer;
-  font-size: 30px;
-  color: #333;
+  font-size: 20px;
+  padding-bottom: 5px;
+  color: white;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
+  background-color: #006B63;
+  border-radius: 50%;  
+  width: 20px; 
+  height: 20px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .left {
-  left: 10px; 
+  left: -30px; 
 }
 
 .right {
-  right: 10px; 
+  right: 5px; 
 }
+
+.arrow:hover {
+  background-color: #004D4A;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
 
 .router-link {
   color: black;
@@ -175,5 +193,25 @@ onBeforeUnmount(() => {
 .router-link-exact-active {
   color: inherit;
   text-decoration: none;
+}
+@media (max-width: 1500px) {
+  .left{
+    left: 12px;
+  }
+  .right{
+    right: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards {
+    gap: 10px; 
+    justify-content: center; 
+  }
+  .card {
+    flex-shrink: 0; 
+    width: 110px; 
+    height: 120px;
+  }
 }
 </style>

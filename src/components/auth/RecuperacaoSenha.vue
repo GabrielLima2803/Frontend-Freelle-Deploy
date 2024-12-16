@@ -1,5 +1,5 @@
 <script setup>
-import { HeaderComponent, HeaderSmall, FooterComponent, FooterSmall } from "@/components";
+import { HeaderComponent, FooterComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from "@/stores/auth";  
 import { useRouter } from 'vue-router';
@@ -31,17 +31,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
+  <header-component />
 
   <div class="wrapContainer">
     <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo" />
     </div>
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="forgotPassword" class="wrapForm">
-          <h4 class="Text">Esqueceu sua senha?</h4>
+          <h4 class="Text">Esqueci Minha Senha</h4>
 
           <div class="input-container">
             <input
@@ -85,34 +83,30 @@ body {
   width: 100%;
   min-height: 90vh;
   background: #006B63;
-  padding-top: 20px;
+  padding-top: 150px;
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 740px;
+  height: 400px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
 }
-
-.logo {
-  width: 80px;
-}
-
 .Text {
   font-size: 18px;
 }
 
 .input-container {
   position: relative;
-  margin-top: 30px;
+  margin-top: 60px;
 }
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
   border: 1px solid #006B63;
   outline: none;
@@ -139,18 +133,13 @@ body {
 .btnCriar {
   width: 100%;
   height: 45px;
-  margin-top: 18px;
-  font-size: 18px;
+  margin-top: 60px;
+  font-size: 16px;
   font-weight: bold;
-  background-color: white;
-  border: 2px solid #006B63;
-  color: #006B63;
-  transition: all 0.3s ease;
-}
-
-.btnCriar:hover {
   background-color: #006B63;
+  border: none;
   color: white;
+  transition: all 0.3s ease;
 }
 
 .Pf {
@@ -166,32 +155,30 @@ body {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
-  .btnCriar {
+  .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
-  }
-
-  .logo {
-    width: 140px;
   }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
+    box-shadow: none;
   }
 
-  .inputForm {
-    height: 40px;
-    padding: 10px;
-  }
-
-  .btnCriar {
+  .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
+  }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
   }
 }
 </style>

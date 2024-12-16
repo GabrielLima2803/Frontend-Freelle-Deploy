@@ -1,10 +1,32 @@
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref, onMounted } from 'vue'
+
 const props = defineProps({
   projeto: {
     type: Object,
     required: true
   }
+})
+
+const showMore = ref(false)
+const isMobile = ref(false)
+
+const verMaisProjeto = () => {
+  showMore.value = !showMore.value
+}
+
+onMounted(() => {
+  const checkIfMobile = () => {
+    isMobile.value = window.innerWidth <= 767
+    if (!isMobile.value) {
+      showMore.value = true 
+    }
+  }
+
+  checkIfMobile()
+  window.addEventListener('resize', checkIfMobile)
+
+  return () => window.removeEventListener('resize', checkIfMobile)
 })
 </script>
 
@@ -12,97 +34,270 @@ const props = defineProps({
   <div v-if="props.projeto" class="container-rectangle">
     <div class="box-img">
       <img :src="props.projeto.image_project.url" alt="Imagem do item" />
+      <div class="overlay-info" v-if="isMobile && showMore">
+        <p class="overlay-text vagas">Vagas: {{ props.projeto.vagas }} / {{ props.projeto.max_vagas }}</p>
+        <p class="overlay-text salario">Salário: R$ {{ props.projeto.salario }}</p>
+      </div>
     </div>
+
     <div class="info">
       <h3 class="title">{{ props.projeto.titulo }}</h3>
-      <p class="category">{{ props.projeto.categoria[0]?.nome || 'Sem categoria' }}</p> <!-- Exibe o nome da categoria -->
-      <p class="description">{{ props.projeto.descricao }}</p>
-      <div class="action">
-        <button class="accept" @click="aceitarProjeto">Aceitar</button>
+      <div class="details">
+        <p class="date-category">
+          JUNE 25 / 1 AGOS | {{ props.projeto.categoria[0]?.nome || 'CULINÁRIA' }}
+        </p>
       </div>
+      <p class="description">
+        {{
+          isMobile && !showMore
+            ? props.projeto.descricao.slice(0, 100) + '...'
+            : props.projeto.descricao
+        }}
+      </p>
+      <div class="action" v-if="showMore">
+        <button class="accept">ACEITAR</button>
+      </div>
+    </div>
+
+    <div class="ver-mais" v-if="!showMore && isMobile">
+      <button @click="verMaisProjeto">Ver mais</button>
+    </div>
+    <div class="ver-menos" v-if="showMore && isMobile">
+      <button @click="verMaisProjeto">Ver menos</button>
     </div>
   </div>
 </template>
-  
+
+
 <style scoped>
 .container-rectangle {
-  width: 100%;
-  max-width: 1000px;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column;
   border: 1px solid #ccc;
   border-radius: 14px;
-  padding: 32px;
   background-color: #f9f9f9;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .box-img {
-  width: 280px;
-  margin-right: 28px;
-  display: flex;
-  justify-content: center;
+  width: 100%;
+  height: 200px;
   overflow: hidden;
-  border-radius: 14px;
-  background-color: #e0e0e0;
-  flex-shrink: 0;
-  height: 100%;
 }
 
 .box-img img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  max-height: 240px;
 }
 
 .info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.title {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 0 0 14px;
-}
-
-.category {
-  font-size: 16px;
-  color: #666;
-  margin: 0 0 14px;
-}
-
-.description {
-  font-size: 16px;
-  color: #333;
-  margin: 0 0 24px;
+  padding: 16px;
+  text-align: center;
 }
 
 .action {
-  display: flex;
-  width: 100%;
+  margin-top: 16px;
 }
 
 .accept {
-  background-color: #f9f9f9;
-  color: #006b63;
-  padding: 12px 40px;
-  font-size: 16px;
+  width: 350px;
   border: 1px solid #006b63;
+  background-color: #ffffff;
+  color: #006b63;
   border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .accept:hover {
   background-color: #006b63;
-  color: #f9f9f9;
-  box-shadow: 0 4px 10px rgba(0, 107, 99, 0.3);
-  transform: translateY(-2px);
+  color: #fff;
+}
+
+.ver-mais,
+.ver-menos {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.ver-mais {
+  background-color: #000;
+  color: #fff;
+}
+
+.ver-menos {
+  border: 1px solid #000;
+  border-radius: 0 0 14px 14px;
+  color: #000;
+  background-color: transparent;
+}
+
+.ver-mais button,
+.ver-menos button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .container-rectangle {
+    width: 400px;
+  }
+
+  .box-img {
+    position: relative;
+  }
+
+  .overlay-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .overlay-text {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .accept {
+    margin-bottom: 8px;
+  }
+
+.vagas {
+  text-align: left; 
+}
+
+.salario {
+  text-align: right; 
+}
+
+
+  .info {
+    padding: 16px;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .details {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .date-category {
+    font-size: 12px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 16px;
+  }
+
+  .accept {
+    width: 350px;
+    border: 1px solid #006b63;
+    background-color: #ffffff;
+    color: #006b63;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .accept:hover {
+    background-color: #006b63;
+    color: #fff;
+  }
+}
+@media (min-width: 768px) {
+  .container-rectangle {
+    flex-direction: row;
+    max-width: 1000px;
+    height: 200px;
+    margin: auto;
+  }
+
+  .box-img {
+    flex: 0 0 300px;
+    height: 220px;
+  }
+
+  .info {
+    flex: 1;
+    padding: 32px;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: -8px;
+    margin-bottom: 3px;
+    text-align: left;
+  }
+
+  .details {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .date-category {
+    font-size: 14px;
+    color: #333;
+    font-weight: normal;
+    text-align: left;  }
+
+  .description {
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+  }
+
+  .accept {
+    background: transparent;
+    color: #006b63;
+    border: 1px #666 solid;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 180px; 
+    padding: 8px 16px;
+    font-size: 14px;
+    margin-top: -5px !important;
+    margin-bottom: 15px !important;
+  }
+  .action {
+    display: flex;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding-bottom: 20px; 
+}
+  .ver-mais, .ver-menos {
+    display: none;
+  }
 }
 </style>

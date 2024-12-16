@@ -1,5 +1,5 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
+import { FooterComponent, HeaderComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
@@ -32,80 +32,65 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
-  <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
-    <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-    </div>
     <div class="containerPrincipal">
-      <div class="FormBot">
-        <form @submit.prevent="login" class="wrapForm">
-          <!-- "Olá!" alinhado à esquerda -->
-          <h4 class="TextLeft">Olá!</h4>
-          <!-- Texto "Para continuar, digite seu e-mail" alinhado à esquerda -->
-          <p class="FormPLeft">Para continuar, digite seu e-mail</p>
+      <form @submit.prevent="login" class="wrapForm">
+        <h4 class="TextLeft">Olá!</h4>
+        <p class="FormPLeft">Para continuar, digite seu e-mail</p>
 
-          <div class="input-container">
-            <input
-              type="text"
-              id="username"
-              class="inputForm"
-              v-model="username"
-            />
-            <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail ou Username</label>
-          </div>
-          <div class="input-container">
-            <input
-              type="password"
-              id="password"
-              class="marginForm inputForm"
-              v-model="password"
-            />
-            <label for="password" :class="{'active': password !== ''}" class="labelForm">Senha</label>
-          </div>
+        <div class="input-container">
+          <input
+            type="text"
+            id="username"
+            class="inputForm"
+            v-model="username"
+          />
+          <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail ou Username</label>
+        </div>
+        <div class="input-container">
+          <input
+            type="password"
+            id="password"
+            class="marginForm inputForm"
+            v-model="password"
+          />
+          <label for="password" :class="{'active': password !== ''}" class="labelForm">Senha</label>
+        </div>
 
-          <button type="button" style="margin-top: 10px" class="btnSenha">
-            <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
-          </button>
-          <button type="submit" class="btnLogin mt-3">Entrar</button>
-          <router-link to="/cadastro">
-            <button type="button" class="btnCriar mt-3">Criar conta</button>
-          </router-link>
-          <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
+        <button type="button" class="btnSenha">
+          <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
+        </button>
 
-          <!-- Exibe a mensagem de erro caso ocorra uma falha no login -->
-          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-        </form>
-      </div>
+        <hr class="custom-hr" />
+        <button type="submit" class="btnLogin mt-3">Entrar</button>
+        <router-link to="/cadastro">
+          <button type="button" class="btnCriar mt-3">Criar Login</button>
+        </router-link>
+        <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
+
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
     </div>
   </div>
-  
-  <div class="footer">
-    <!-- Footer Grande (escondido em telas pequenas) -->
-    <footer-component v-if="!isSmallScreen" />
-    <!-- Footer Pequeno (exibido apenas em telas pequenas) -->
-    <footer-small v-if="isSmallScreen" />
-  </div>
+
+  <footer-component v-if="!isSmallScreen" class="footer" />
+  <footer-small v-if="isSmallScreen" />
 </template>
 
 <style scoped>
-/* Estilos gerais */
 body {
   background: #006B63;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   color: white;
   font-family: 'Arial', sans-serif;
 }
 
-/* Container principal */
 .wrapContainer {
   display: flex;
   flex-direction: column;
@@ -117,20 +102,15 @@ body {
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 760px;
+  height: 560px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
 }
 
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
-}
-
-/* Texto de saudação */
 .TextLeft {
   font-weight: bold;
   text-align: left;
@@ -140,7 +120,6 @@ body {
   text-align: left;
 }
 
-/* Inputs */
 .input-container {
   position: relative;
   margin-top: 30px;
@@ -148,18 +127,11 @@ body {
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
-  border: 1px solid #006B63;
+  border: 0.3px solid #006B63;
   outline: none;
   transition: all 0.3s;
-}
-
-.inputForm:focus + .labelForm,
-.inputForm.active + .labelForm {
-  top: -10px;
-  font-size: 12px;
-  color: #006B63;
 }
 
 .labelForm {
@@ -169,19 +141,13 @@ body {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
-  font-size: 16px;
-}
-
-.labelForm.active {
-  top: -10px;
   font-size: 12px;
 }
 
-/* Botões */
 .btnLogin, .btnCriar {
   width: 100%;
   height: 45px;
-  margin-top: 15px;
+  margin-top: 25px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -194,9 +160,10 @@ body {
 
 .btnCriar {
   background-color: white;
-  border: 2px solid #006B63;
+  border: 0.5px solid #006B63;
   color: #006B63;
   transition: all 0.3s ease;
+  margin-top: 25px;
 }
 
 .btnCriar:hover {
@@ -204,15 +171,14 @@ body {
   color: white;
 }
 
-/* Botão de recuperação de senha */
 .btnSenha {
-  margin-top: 20px;
   border: none;
-  border-bottom: solid 1px #006B63;
-  background-color: white;
-  color: gray;
-  font-size: 15px;
   text-decoration: none;
+  background-color: white;
+  color: rgb(149, 146, 146);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .btnSenha:hover {
@@ -220,7 +186,14 @@ body {
   transition: 0.7s;
 }
 
-/* Texto informativo */
+.custom-hr {
+  display: block; 
+  border: none; 
+  border-top: 1.5px solid #006B63; 
+  margin: 1px auto;
+  width: 35%; 
+}
+
 .Pf {
   font-size: 12px;
   margin-top: 30px;
@@ -232,42 +205,38 @@ body {
   margin-top: 10px;
 }
 
-/* Footer */
-.footer {
-  background: #006B63;
+.footer{
+  background-color: #006B63;
 }
 
-/* Estilos para telas pequenas */
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
   .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
   }
-
-  .logo {
-    width: 140px;
-  }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
-  }
-
-  .inputForm {
-    height: 40px;
-    padding: 10px;
+    box-shadow: none;
   }
 
   .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
+  }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
   }
 }
 </style>

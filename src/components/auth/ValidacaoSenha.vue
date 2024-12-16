@@ -1,5 +1,5 @@
 <script setup>
-import { HeaderComponent, HeaderSmall } from "@/components";
+import { HeaderComponent, FooterComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';  
 import { useRouter } from 'vue-router';
@@ -14,7 +14,6 @@ const resetData = ref({
 
 const authStore = useAuthStore();
 
-// Verifica o tamanho da tela
 const checkScreenSize = () => {
   isSmallScreen.value = window.innerWidth <= 768;
 };
@@ -24,7 +23,6 @@ onMounted(() => {
   window.addEventListener('resize', checkScreenSize);
 });
 
-// Função para mover o foco entre os campos de código
 const moveFocus = (event, currentIndex) => {
   const inputs = document.querySelectorAll('.code-input');
   if (event.target.value !== "" && currentIndex < inputs.length - 1) {
@@ -34,7 +32,6 @@ const moveFocus = (event, currentIndex) => {
   }
 };
 
-// Função para redefinir a senha
 const resetPassword = async () => {
   const codeString = resetData.value.code.join(''); 
 
@@ -63,21 +60,15 @@ const resetPassword = async () => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
-  <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
-  <header-small v-if="isSmallScreen" />
+  <header-component/>
 
   <div class="wrapContainer">
-    <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-    </div>
+    <div class="FormTop">    </div>
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="resetPassword" class="wrapForm">
-          <h4 class="Text">Digite o código que foi enviado no email</h4>
+          <h2 class="text">Digite o Código</h2>
           <div class="code-container mt-3">
-            <!-- Código de redefinição em 6 campos -->
             <input
               v-for="(input, index) in 6"
               :key="index"
@@ -117,6 +108,9 @@ const resetPassword = async () => {
       </div>
     </div>
   </div>
+
+  <footer-component v-if="!isSmallScreen" class="footer"/>
+  <footer-small v-if="isSmallScreen" />
 </template>
 
 <style scoped>
@@ -139,39 +133,42 @@ const resetPassword = async () => {
   width: 100%;
   min-height: 100vh;
   background: #006B63;
+  padding-top: 80px;
 }
 
 .containerPrincipal {
-  width: 440px;
+  width: 640px;
+  height: 740px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   text-align: center;
 }
 
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
+.text{
+  margin-top: 50px;
 }
 
 .input-container {
   position: relative;
-  margin-top: 28px;
+  margin: 30px;
 }
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
   border: 1px solid #006B63;
   outline: none;
   transition: all 0.3s;
 }
 
-.inputForm:focus + .labelForm {
+.inputForm:focus + .labelForm,
+.labelForm.active {
   top: -10px;
   font-size: 12px;
+  color: #006B63;
 }
 
 .labelForm {
@@ -181,32 +178,33 @@ const resetPassword = async () => {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
+  color: #666;
 }
+
 
 .btnAtualizar {
   background-color: #006B63;
   color: white;
   border: none;
-  width: 100%;
+  width: 89%;
   height: 45px;
-  margin-top: 15px;
+  margin-top: 35px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .Pf {
   font-size: 12px;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 
-/* Estilos para os quadrados do código */
 .code-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  padding: 50px;
 }
 
 .code-input {
@@ -214,13 +212,12 @@ const resetPassword = async () => {
   height: 50px;
   font-size: 24px;
   text-align: center;
-  border: 1px solid #006B63;
-  border-radius: 5px;
+  border: 1px solid #bebebe;
   outline: none;
 }
 
 .code-input:focus {
-  border-color: #000;
+  border-color: #006B63;
 }
 
 .separator {
@@ -229,37 +226,38 @@ const resetPassword = async () => {
   color: #006B63;
 }
 
-/* Estilos para telas pequenas */
+.footer {
+  background: #006B63;
+}
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
   .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
   }
-
-  .logo {
-    width: 140px;
-  }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
-  }
-
-  .inputForm {
-    height: 40px;
-    padding: 10px;
+    box-shadow: none;
+    margin-top: -50px;
   }
 
   .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
+  }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
   }
 }
 </style>

@@ -1,13 +1,16 @@
 <script setup>
-import {ProfilePage,HeaderLoggedPage, FooterComponent} from '@/components';
+import {ProfilePage,HeaderLoggedPage, FooterPrincipalComponent} from '@/components';
 </script>
 
 <template>
         <HeaderLoggedPage/>
         <ProfilePage/>
-        <FooterComponent/> 
+        <footer-principal-component v-if="!isSmallScreen" />
+        <footer-small v-if="isSmallScreen" />
 </template>
 
 <style scoped>
+
+
 
 </style>

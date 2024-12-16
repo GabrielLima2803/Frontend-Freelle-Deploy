@@ -27,7 +27,7 @@ watch(() => route.params.categoriaId, (novoCategoriaId) => {
   <CardsComponent class="margin-top" />
   <h1 class="title">Projetos</h1>
   <div class="flex">
-    <CardUser />
+    <CardUser/>
     <div class="cards-job">
       <div v-for="projeto in projetosStore.projetosPorCategoria" :key="projeto.id">
         <CardJob :projeto="projeto" />

@@ -1,5 +1,5 @@
 <script setup>
-import { FooterComponent, HeaderComponent, CardsComponent, CardServicos, CardsPrestadores, CarouselOne, CardsFeitos } from "@/components";
+import { FooterPrincipalComponent, HeaderComponent, CardsComponent, CardServicos, CardsPrestadores, CarouselOne, CardsFeitos } from "@/components";
 </script>
 
 <template>
@@ -12,7 +12,7 @@ import { FooterComponent, HeaderComponent, CardsComponent, CardServicos, CardsPr
     <CardsFeitos/>
   </main>
   <footer>
-    <FooterComponent/>    
+    <FooterPrincipalComponent/>    
   </footer>
 </template>
 
@@ -46,7 +46,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding: 3rem;
-  background-color: #eeeeee;
+  background-color: #ffffff;
   grid-area: footer;
 }
 </style>

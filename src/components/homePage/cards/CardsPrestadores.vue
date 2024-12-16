@@ -162,4 +162,15 @@ h2 {
 .no-decoration {
   text-decoration: none;
 }
+@media (max-width: 768px) {
+  .provider-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .provider-card {
+    width: 100%;
+  }
+}
+
 </style>

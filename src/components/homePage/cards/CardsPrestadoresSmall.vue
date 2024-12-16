@@ -142,7 +142,6 @@ const providers = [
   background-color: #f0f0f0;
 }
 
-/* Remover decoração de texto do router-link */
 .no-decoration {
   text-decoration: none;
 }

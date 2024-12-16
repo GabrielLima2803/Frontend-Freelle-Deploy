@@ -1,5 +1,5 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
+import { FooterComponent, HeaderComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 
 const isSmallScreen = ref(false);
@@ -20,12 +20,9 @@ const passwordConfirm = ref('');
 </script>
 
 <template>
-  <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
+  <header-component />
 
   <div class="wrapContainer">
-    <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-
     <div class="containerPrincipal">
       <div class="FormBot">
         <form @submit.prevent="login" class="wrapForm">
@@ -92,11 +89,6 @@ body {
   padding: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-}
-
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
 }
 
 .TextLeft,
@@ -177,6 +169,9 @@ body {
 }
 
 @media (max-width: 576px) {
+  body{
+    background: White;
+  }
   .containerPrincipal {
     width: 80%;
     padding: 15px;
