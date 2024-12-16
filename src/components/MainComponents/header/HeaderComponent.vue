@@ -1,6 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth';
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted} from 'vue';
 
 const authStore = useAuthStore();
 const isLogged = computed(() => authStore.isLogged);
@@ -15,10 +15,21 @@ const logout = () => {
   authStore.logout();
   showMenu.value = false;
 };
+
+const isSmallScreen = ref(false);
+
+const checkScreenSize = () => {
+  isSmallScreen.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  checkScreenSize();
+  window.addEventListener('resize', checkScreenSize);
+});
 </script>
 
 <template>
-  <div class="header">
+  <div v-if="!isSmallScreen" class="header">
     <div class="header-container">
       <div class="header-left">
         <router-link to="/" class="btn">
@@ -42,8 +53,8 @@ const logout = () => {
         </div>
 
         <div v-else class="auth-buttons">
-          <router-link to="/login" class="btn">Entrar</router-link>
-          <router-link to="/adicao-job" class="btn btn-i">Inscrição</router-link>
+          <router-link to="/login" class="btn">Freelancer</router-link>
+          <router-link to="/" class="btn btn-i">Empresa</router-link>
         </div>
       </div>
     </div>
@@ -99,6 +110,8 @@ button {
   text-decoration: none;
   color: white;
   margin: auto;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
 }
 
 .btn-i {
@@ -114,6 +127,8 @@ button {
 .auth-buttons {
   display: flex;
   gap: 2em;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
 }
 
 .user-avatar-container {

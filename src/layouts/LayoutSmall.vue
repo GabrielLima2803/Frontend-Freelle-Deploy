@@ -1,38 +1,31 @@
 <script setup>
-import { FooterSmall, HeaderSmall, CardsComponent, CardServicos, CardsPrestadoresSmall, CardsFeitos } from "@/components";
+import { FooterSmall, CardServicos, CardsPrestadoresSmall, CardsFeitos, CardsComponent } from "@/components";
 </script>
 
 <template>
-  <HeaderSmall/>
   <main>
-    <CardsComponent/>
     <CardServicos/>
-    <CardsPrestadoresSmall/>
+    <CardsComponent/>
+    <div class="card-container">
+      <CardsPrestadoresSmall/>
+    </div>
     <CardsFeitos/>
   </main>
   <FooterSmall/>
 </template>
 
 <style scoped>
-#layout-small {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+html, body {
+  width: 100%; 
+  margin: 0; 
+  padding: 0; 
 }
 
-header {
+#layout-small {
   display: flex;
-  justify-content: space-between;
-  padding: 1.5rem;
-  border-bottom: #eeeeee 2px solid;
-  background-color: white;
-
-  z-index: 10;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 5%;
+  flex-direction: column;
+  min-height: 100%; 
+  width: 100%; 
 }
 
 main {
@@ -41,11 +34,12 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   padding-bottom: 4rem;
   padding-top: 1.5rem;
   position: relative;
+  box-sizing: border-box;
 }
 
 footer {
@@ -54,13 +48,21 @@ footer {
   padding: 1.5rem;
   margin-top: auto;
   background-color: white;
-
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  position: relative;
   width: 100%;
   color: white;
   text-align: center;
   z-index: 10;
 }
+
+.card-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 15px; 
+  overflow: hidden;
+  box-sizing: border-box; 
+}
+
 </style>
