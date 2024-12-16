@@ -1,5 +1,5 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall, CardsPerfil, CardProjetos } from "@/components";
+import { FooterPrincipalComponent, HeaderComponent, FooterSmall, CardsPerfil, CardProjetos, CardJobPerfil } from "@/components";
 import { ref, onMounted } from 'vue';
 const isSmallScreen = ref(false);
 
@@ -14,17 +14,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
   <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
-  <header-small v-if="isSmallScreen" />
   <div class="container">
     <CardsPerfil />
     <CardProjetos />
-  <div class="footer">
-  <!-- Footer Grande (escondido em telas pequenas) -->
-  <footer-component v-if="!isSmallScreen" />
-  <!-- Footer Pequeno (exibido apenas em telas pequenas) -->
+    <card-job-perfil/>
+    <div class="footer">
+  <footer-principal-component v-if="!isSmallScreen" />
   <footer-small v-if="isSmallScreen" />
 </div>
 </div>
@@ -32,8 +28,8 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  max-width: 1460px; /* Define a largura máxima */
-  margin: 0 auto; /* Centraliza o conteúdo */
-  padding: 0 20px; /* Adiciona um pequeno padding nas laterais, se necessário */
+  max-width: 1460px;
+  margin: 0 auto; 
+  padding: 0 20px;
 }
 </style>

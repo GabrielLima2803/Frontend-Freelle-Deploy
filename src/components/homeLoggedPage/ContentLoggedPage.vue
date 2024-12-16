@@ -22,7 +22,6 @@ onMounted(() => {
             <CardUser/>
             <div class="cards-job">
                 <h1 class="title">Melhor Raking</h1>
-                <!-- Limita a exibição a apenas 3 projetos -->
                 <div v-for="projeto in projetosStore.projetos.slice(0, 3)" :key="projeto.id">
                     <CardJob :projeto="projeto" />
                 </div>
@@ -94,4 +93,13 @@ h2 {
 .img-feito {
     width: 100%;
 }
+
+@media (max-width: 576px) {
+  .box-img{
+    width: 460px;
+    height: 80px;
+    margin-left: 10px;
+  }
+}
+
 </style>

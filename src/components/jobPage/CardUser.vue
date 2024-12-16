@@ -30,7 +30,6 @@
 import { reactive, onMounted, watch } from 'vue';
 import { useUserStore } from '@/stores/user'; 
 
-// Usar reactive para garantir reatividade em todos os campos
 const provider = reactive({
   name: "",
   username: "",
@@ -45,7 +44,6 @@ const provider = reactive({
   foto: "https://i.ibb.co/DbXfRCv/user-default.png",  
 });
 
-// Ratings exemplo
 const ratings = reactive([
   { stars: 5, percentage: 80, count: 150 },
   { stars: 4, percentage: 50, count: 120 },
@@ -154,5 +152,16 @@ watch(() => userStore.currentUser, (newUser) => {
 .formation .icon {
     margin-right: 5px;
     color: #666;
+}
+
+@media (max-width: 576px){
+  .container{
+    display: none;
+  }
+}
+@media (max-width: 1500px) {
+    .container{
+        display: none;
+    }
 }
 </style>

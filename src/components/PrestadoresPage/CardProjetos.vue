@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, reactive } from 'vue';
 
 const projects = ref([
   { id: 1, image: 'https://i.ibb.co/X2JJhWw/Rectangle-50.jpg', title: 'Cartões de Visita' },
@@ -8,6 +8,14 @@ const projects = ref([
   { id: 4, image: 'https://i.ibb.co/3RTrZv4/Rectangle-53.jpg', title: 'Logo Toptip' },
   { id: 5, image: 'https://i.ibb.co/5GspfLd/Rectangle-54.jpg', title: 'Logo Casa da Fazenda' },
   { id: 6, image: 'https://i.ibb.co/c3SdV4N/Rectangle-55.jpg', title: 'Cartão de Bebê' },
+]);
+
+const ratings = reactive([
+  { stars: 5, percentage: 80, count: 150 },
+  { stars: 4, percentage: 50, count: 120 },
+  { stars: 3, percentage: 30, count: 90 },
+  { stars: 2, percentage: 10, count: 40 },
+  { stars: 1, percentage: 5, count: 25 }
 ]);
 
 const education = ref('IFC - Campus Araquari');
@@ -39,7 +47,6 @@ onUnmounted(() => {
   <div class="portfolio">
     <section class="portfolio-section">
       <p class="section-title">Portfólio de projetos</p>
-      <!-- Carrossel para telas pequenas -->
       <div v-if="isSmallScreen" class="carousel">
         <button @click="prevSlide" class="carousel-button">❮</button>
         <div class="carousel-slide">
@@ -47,7 +54,6 @@ onUnmounted(() => {
         </div>
         <button @click="nextSlide" class="carousel-button">❯</button>
       </div>
-      <!-- Galeria para telas grandes -->
       <div v-else class="portfolio-gallery">
         <div class="project-card" v-for="project in projects" :key="project.id">
           <img :src="project.image" :alt="project.title" />
@@ -63,6 +69,16 @@ onUnmounted(() => {
       </div>
     </section>
   </div>
+  <div class="box-rating">
+            <p class="negrito">Avaliação</p>
+            <div class="rating-row" v-for="star in ratings" :key="star.stars">
+                <p>{{ star.stars }} estrelas</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" :style="{ width: star.percentage + '%' }"></div>
+                </div>
+                <p class="rating-count">({{ star.count }} avaliações)</p>
+            </div>
+        </div>
 </template>
 
 <style scoped>
@@ -105,7 +121,6 @@ onUnmounted(() => {
   border-radius: 8px;
 }
 
-/* Carrossel para telas pequenas */
 .carousel {
   display: flex;
   align-items: center;
@@ -119,7 +134,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 300px;
+  max-width: 200px;
   margin: 0 10px;
 }
 
@@ -142,7 +157,6 @@ onUnmounted(() => {
   margin-bottom: 8px;
 }
 
-/* Formação */
 .education {
   display: flex;
   align-items: center;
@@ -155,8 +169,40 @@ onUnmounted(() => {
   font-size: 24px;
   color: #333;
 }
+.box-rating{
+  width: 40%;
+}
 
-/* Responsivo - remover barra de rolagem */
+.rating-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin: 0 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #000000;
+    border-radius: 4px;
+}
+
+.negrito {
+    font-weight: bold;
+}
+
+.rating-count {
+    font-size: 12px;
+    color: #666;
+}
+
 @media (max-width: 768px) {
   .portfolio-gallery {
     display: none;
@@ -176,5 +222,15 @@ onUnmounted(() => {
   .section-title {
     font-size: 16px;
   }
+  @media (max-width: 576px){
+    .box-rating{
+      width: 75%;
+      padding-bottom: 60px;
+    }
+
+
+  }
 }
+
+
 </style>

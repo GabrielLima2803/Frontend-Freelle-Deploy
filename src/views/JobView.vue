@@ -1,5 +1,5 @@
 <script setup>
-import { ContentMainJob, FooterComponent, HeaderSmall, FooterSmall, HeaderLoggedPage } from "@/components";
+import { ContentMainJob, FooterPrincipalComponent, FooterSmall, HeaderLoggedPage } from "@/components";
 import { ref, onMounted } from 'vue';
 const isSmallScreen = ref(false);
 
@@ -14,12 +14,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <HeaderLoggedPage v-if="!isSmallScreen" />
-    <header-small v-if="isSmallScreen" />
+    <HeaderLoggedPage class="header" />
     <div class="container">
     <ContentMainJob/>
     <div class="footer">
-    <footer-component v-if="!isSmallScreen" />
+    <footer-principal-component v-if="!isSmallScreen" />
     <footer-small v-if="isSmallScreen" />
   </div>
   </div>  
@@ -27,5 +26,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
+@media (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+  .header{
+    display: none;
+  }
+}
 
 </style>
