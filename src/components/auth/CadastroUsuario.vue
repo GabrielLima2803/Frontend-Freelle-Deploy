@@ -1,5 +1,5 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
+import { FooterComponent, HeaderComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 
 const isSmallScreen = ref(false);
@@ -20,8 +20,7 @@ const passwordConfirm = ref('');
 </script>
 
 <template>
-  <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
+  <header-component />
 
   <div class="wrapContainer">
     <div class="containerPrincipal">
@@ -170,6 +169,9 @@ body {
 }
 
 @media (max-width: 576px) {
+  body{
+    background: White;
+  }
   .containerPrincipal {
     width: 80%;
     padding: 15px;

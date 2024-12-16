@@ -1,6 +1,6 @@
 <script setup>
-import { HeaderLoggedPage, HeaderSmall, FooterComponent, FooterSmall } from "@/components";
-import { ref, onMounted, computed } from 'vue';
+import { HeaderLoggedPage, FooterComponent, FooterSmall } from "@/components";
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useNacionalidadeStore } from '@/stores/nacionalidade';
 import { useFormacaoStore } from '@/stores/formacao';
@@ -28,25 +28,17 @@ const userData = ref({
   name: '',
   email: '',
   biografia: '',
-  nacionalidade: null,
-  linguagem_principal: '',
   especializacao: '',
-  instagram: '',
-  linkedin: '',
   foto: '',
   formacao: null
 });
 
-const nacionalidades = computed(() => nacionalidadeStore.nacionalidades);
-const formacoes = computed(() => formacaoStore.formacoes);
-
 const handleFileUpload = (event) => {
-  const file = event.target.files[0]; // Pega o primeiro arquivo
+  const file = event.target.files[0]; 
   if (file) {
-    userData.value.foto = file; // Atribui o arquivo à propriedade foto
+    userData.value.foto = file; 
   }
 };
-
 
 const updateProfile = async () => {
   try {
@@ -57,19 +49,13 @@ const updateProfile = async () => {
       return;
     }
 
-    // Cria o FormData
     const formData = new FormData();
     formData.append('name', userData.value.name);
     formData.append('email', userData.value.email);
     formData.append('biografia', userData.value.biografia);
-    formData.append('nacionalidade', userData.value.nacionalidade);
-    formData.append('linguagem_principal', userData.value.linguagem_principal);
     formData.append('especializacao', userData.value.especializacao);
-    formData.append('instagram', userData.value.instagram);
-    formData.append('linkedin', userData.value.linkedin);
     formData.append('formacao', userData.value.formacao);
 
-    // Se houver uma foto, envia-a
     if (userData.value.foto) {
       formData.append('foto', userData.value.foto);
     }
@@ -86,24 +72,23 @@ const updateProfile = async () => {
 </script>
 
 <template>
-  <HeaderLoggedPage v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
+  <HeaderLoggedPage />
   <div class="wrapContainer">
-    <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
-
     <div class="containerPrincipal">
       <p class="update-text">Precisa atualizar seu perfil? <a href="#">Vá para o meu perfil</a></p>
-
+      <hr class="divider">
+      <div class="arrow-container">
+        <span class="arrow">←</span>
+      </div>
       <div class="profile-form-container">
         <div class="profile-section">
           <img :src="userData.foto || 'default-avatar.png'" alt="Foto de perfil" class="profile-img" />
           <div class="input-container">
-            <label for="foto">Escolha uma foto</label>
             <input type="file" id="foto" accept="image/*" @change="handleFileUpload" />
           </div>
-          <div class="story-container">
-            <p class="story-text">Conte um pouco da sua história...</p>
-            <textarea v-model="userData.biografia" placeholder="Conte sua história..." class="biography-textarea"></textarea>
+          <img src="https://i.ibb.co/KxzTsLY/Group-174.png" alt="Editar" class="editar">
+          <div>
+            <textarea v-model="userData.biografia" placeholder="Conte um pouco da sua história..." class="biography-textarea"></textarea>
           </div>
         </div>
 
@@ -114,53 +99,23 @@ const updateProfile = async () => {
           </div>
 
           <div class="input-container">
-            <label for="email">Email</label>
+            <label for="email">E-mail</label>
             <input type="email" id="email" class="inputForm" v-model="userData.email" placeholder="Digite seu email..." />
           </div>
 
           <div class="input-container">
-            <label for="nacionalidade">Nacionalidade</label>
-            <select id="nacionalidade" v-model="userData.nacionalidade" class="inputForm">
-              <option value="">Selecione sua nacionalidade</option>
-              <option v-for="nacionalidade in nacionalidades" :key="nacionalidade.id" :value="nacionalidade.id">
-                {{ nacionalidade.nome }}
-              </option>
-            </select>
-          </div>
-
-          <div class="input-container">
-            <label for="linguagem_principal">Linguagem Principal</label>
-            <input type="text" id="linguagem_principal" class="inputForm" v-model="userData.linguagem_principal" placeholder="Informe sua linguagem principal..." />
-          </div>
-
-          <div class="input-container">
-            <label for="especializacao">Especialização</label>
-            <input type="text" id="especializacao" class="inputForm" v-model="userData.especializacao" placeholder="Informe sua especialização..." />
-          </div>
-
-          <div class="input-container">
-            <label for="instagram">Instagram</label>
-            <input type="text" id="instagram" class="inputForm" v-model="userData.instagram" placeholder="Informe seu Instagram..." />
-          </div>
-
-          <div class="input-container">
-            <label for="linkedin">LinkedIn</label>
-            <input type="text" id="linkedin" class="inputForm" v-model="userData.linkedin" placeholder="Informe seu LinkedIn..." />
+            <label for="especializacao">Área de atuação </label>
+            <input type="text" id="especializacao" class="inputForm" v-model="userData.especializacao" placeholder="Informe sua área de atuação...  " />
           </div>
 
           <div class="input-container">
             <label for="formacao">Formação</label>
-            <select id="formacao" v-model="userData.formacao" class="inputForm">
-              <option value="">Selecione sua formação</option>
-              <option v-for="formacao in formacoes" :key="formacao.id" :value="formacao.id">
-                {{ formacao.nivel_academico }}
-              </option>
-            </select>
+            <input type="text" id="formacao" class="inputForm" v-model="userData.formacao" placeholder="Digite sua formação... " />
           </div>
-
-          <button type="submit" class="btn-submit">CONFIRMAR ALTERAÇÕES</button>
         </form>
       </div>
+      
+                <button type="submit" class="btn-submit">CONFIRMAR ALTERAÇÕES</button>
 
       <p class="privacy">Protegido por reCAPTCHA - <a href="#">Privacidade</a> | <a href="#">Condições</a></p>
     </div>
@@ -172,15 +127,10 @@ const updateProfile = async () => {
   </div>
 </template>
 
-
-
 <style scoped>
 body {
   background-color: #006B63;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 0;
   font-family: 'Arial', sans-serif;
 }
@@ -194,33 +144,43 @@ body {
   background-color: #006B63;
 }
 
-.logo-top {
-  width: 80px;
-  margin-bottom: 20px;
-}
-
 .containerPrincipal {
-  width: 80%;
-  max-width: 800px;
+  width: 1000px;
   background-color: white;
   padding: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 
 .update-text {
   font-size: 14px;
   color: #666;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .update-text a {
   color: #006B63;
   text-decoration: none;
   font-weight: bold;
+}
+
+.divider {
+  margin: 10px 0;
+  border: 0;
+  border-top: 2px solid #ccc;
+  width: 100%;
+}
+
+.arrow-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px 0;
+}
+
+.arrow {
+  font-size: 24px;
+  color: #006B63;
+  cursor: pointer;
 }
 
 .profile-form-container {
@@ -243,17 +203,15 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 10px;
+  margin-left: -90px;
   border: 2px solid #ccc;
 }
 
-.story-container {
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.editar{
+  width: 20px;
+  margin-top: -60px;
+  margin-left: 20px;
+  cursor: pointer;
 }
 
 .story-text {
@@ -276,6 +234,7 @@ body {
 
 .inputForm {
   width: 100%;
+  height: 55px;
   padding: 12px;
   border: 1px solid #ccc;
   outline: none;
@@ -288,8 +247,7 @@ body {
 }
 
 .btn-submit {
-  width: 100%;
-  max-width: 400px;
+  width: 920px;
   padding: 15px;
   margin: 25px auto;
   background-color: #006B63;
@@ -310,6 +268,7 @@ body {
   font-size: 12px;
   color: #666;
   margin-top: 30px;
+  text-align: center;
 }
 
 .privacy a {
@@ -323,14 +282,15 @@ body {
 }
 
 .biography-textarea {
-  width: 100%;
+  width: 250px;
   height: 100px;
   padding: 12px;
   border: 1px solid #ccc;
   outline: none;
-  margin-top: 5px;
+  margin-top: 45px;
   border-radius: 8px;
   transition: border-color 0.3s;
+  box-shadow: 2px 2px #c4c4c4;
 }
 
 .biography-textarea:focus {
@@ -360,4 +320,83 @@ body {
 .input-container input[type="file"]:focus + label {
   color: #003F3A;
 }
-</style>
+
+@media (max-width: 576px) {
+  .wrapContainer {
+    background: white;
+    justify-content: center;
+  }
+
+  .containerPrincipal {
+    width: 100%;
+    padding: 10px;
+    margin-top: -20px;
+    box-shadow: none;
+    background-color: #fff;
+  }
+
+  .profile-form-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .profile-section {
+    width: 100%;
+    align-items: center;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+    margin-top: 20px;
+  }
+
+  .editar {
+    margin-top: -70px;
+    margin-left: 90px;
+    width: 20px;
+  }
+
+  .biography-textarea {
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    width: 400px;
+    margin-top: 40px;
+  }
+
+  .wrapForm {
+    width: 100%;
+  }
+
+  .input-container {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .inputForm {
+    width: 100%;
+    height: 55px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    height: 50px;
+    margin: 20px 0;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .privacy {
+    font-size: 10px;
+    margin-top: 10px;
+  }
+  .update-text,
+  .arrow-container,
+  .divider {
+    display: none;
+  }
+}
+
+</style> 

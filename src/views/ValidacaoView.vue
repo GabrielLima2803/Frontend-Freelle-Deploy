@@ -2,9 +2,7 @@
 </script>
 
 <template>
-  <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
-
+  <header-component/>
   <div class="wrapContainer">
     <div class="FormTop">
       <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo-top" />
@@ -22,9 +20,7 @@
               class="code-input"
               @input="moveFocus($event, index)"
             />
-            <!-- Traço separador -->
             <span class="separator">-</span>
-            <!-- Segundo grupo de três inputs -->
             <input
               v-for="(input, index) in 3"
               :key="index + 3"

@@ -1,5 +1,5 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
+import { FooterComponent, HeaderComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
@@ -33,57 +33,50 @@ onMounted(() => {
 
 <template>
   <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
 
   <div class="wrapContainer">
-    <div class="FormTop">
-    </div>
     <div class="containerPrincipal">
-      <div class="FormBot">
-        <form @submit.prevent="login" class="wrapForm">
-          <h4 class="TextLeft">Olá!</h4>
-          <p class="FormPLeft">Para continuar, digite seu e-mail</p>
+      <form @submit.prevent="login" class="wrapForm">
+        <h4 class="TextLeft">Olá!</h4>
+        <p class="FormPLeft">Para continuar, digite seu e-mail</p>
 
-          <div class="input-container">
-            <input
-              type="text"
-              id="username"
-              class="inputForm"
-              v-model="username"
-            />
-            <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail ou Username</label>
-          </div>
-          <div class="input-container">
-            <input
-              type="password"
-              id="password"
-              class="marginForm inputForm"
-              v-model="password"
-            />
-            <label for="password" :class="{'active': password !== ''}" class="labelForm">Senha</label>
-          </div>
+        <div class="input-container">
+          <input
+            type="text"
+            id="username"
+            class="inputForm"
+            v-model="username"
+          />
+          <label for="username" :class="{'active': username !== ''}" class="labelForm">E-mail ou Username</label>
+        </div>
+        <div class="input-container">
+          <input
+            type="password"
+            id="password"
+            class="marginForm inputForm"
+            v-model="password"
+          />
+          <label for="password" :class="{'active': password !== ''}" class="labelForm">Senha</label>
+        </div>
 
-          <button type="button" style="margin-top: 10px" class="btnSenha">
-  <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
-</button>
+        <button type="button" class="btnSenha">
+          <router-link to="/recuperacao" class="btnSenha">Esqueci minha senha</router-link>
+        </button>
 
-<hr class="custom-hr" />
-          <button type="submit" class="btnLogin mt-3">Entrar</button>
-          <router-link to="/cadastro">
-            <button type="button" class="btnCriar mt-3">Criar Login</button>
-          </router-link>
-          <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
+        <hr class="custom-hr" />
+        <button type="submit" class="btnLogin mt-3">Entrar</button>
+        <router-link to="/cadastro">
+          <button type="button" class="btnCriar mt-3">Criar Login</button>
+        </router-link>
+        <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
 
-          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-        </form>
-      </div>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
     </div>
   </div>
-  
-  <div class="footer">
-    <footer-component v-if="!isSmallScreen" />
-    <footer-small v-if="isSmallScreen" />
-  </div>
+
+  <footer-component v-if="!isSmallScreen" class="footer" />
+  <footer-small v-if="isSmallScreen" />
 </template>
 
 <style scoped>
@@ -92,7 +85,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   color: white;
   font-family: 'Arial', sans-serif;
@@ -141,13 +134,6 @@ body {
   transition: all 0.3s;
 }
 
-.inputForm:focus + .labelForm,
-.inputForm.active + .labelForm {
-  top: -10px;
-  font-size: 12px;
-  color: #006B63;
-}
-
 .labelForm {
   position: absolute;
   top: 50%;
@@ -155,11 +141,6 @@ body {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
-  font-size: 12px;
-}
-
-.labelForm.active {
-  top: -10px;
   font-size: 12px;
 }
 
@@ -224,40 +205,38 @@ body {
   margin-top: 10px;
 }
 
-.footer {
-  background: #006B63;
+.footer{
+  background-color: #006B63;
 }
 
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
   .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
   }
-
-  .logo {
-    width: 140px;
-  }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
-  }
-
-  .inputForm {
-    height: 40px;
-    padding: 10px;
+    box-shadow: none;
   }
 
   .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
+  }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
   }
 }
 </style>

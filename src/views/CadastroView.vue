@@ -1,9 +1,10 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
-import { ref } from 'vue';
+import { FooterComponent, HeaderComponent, FooterSmall } from "@/components";
+import { ref, onMounted} from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth'; 
 
+const isSmallScreen = ref(false);
 const router = useRouter();
 const authStore = useAuthStore();
 
@@ -44,11 +45,19 @@ const setLabelActive = (inputId) => {
     label.classList.remove('active');
   }
 };
+
+const checkScreenSize = () => {
+  isSmallScreen.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  checkScreenSize();
+  window.addEventListener('resize', checkScreenSize);
+});
 </script>
 
 <template>
-  <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
+  <header-component />
 
   <div class="wrapContainer">
     <div class="containerPrincipal">
@@ -82,11 +91,8 @@ const setLabelActive = (inputId) => {
       </div>
     </div>
   </div>
-
-  <div class="footer">
-    <footer-component v-if="!isSmallScreen" />
+    <footer-component v-if="!isSmallScreen" class="footer" />
     <footer-small v-if="isSmallScreen" />
-  </div>
 </template>
 
 <style scoped>
@@ -188,32 +194,30 @@ body {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
-  .btnCriar {
+  .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
-  }
-
-  .logo-top {
-    width: 60px;
   }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
+    box-shadow: none;
   }
 
-  .inputForm {
-    height: 40px;
-    padding: 10px;
-  }
-
-  .btnCriar {
+  .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
+  }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
   }
 }
 </style>

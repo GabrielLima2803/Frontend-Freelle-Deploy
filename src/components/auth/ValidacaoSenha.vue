@@ -1,5 +1,5 @@
 <script setup>
-import { HeaderComponent, HeaderSmall, FooterComponent, FooterSmall } from "@/components";
+import { HeaderComponent, FooterComponent, FooterSmall } from "@/components";
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';  
 import { useRouter } from 'vue-router';
@@ -60,8 +60,7 @@ const resetPassword = async () => {
 </script>
 
 <template>
-  <header-component v-if="!isSmallScreen" />
-  <header-small v-if="isSmallScreen" />
+  <header-component/>
 
   <div class="wrapContainer">
     <div class="FormTop">    </div>
@@ -230,37 +229,35 @@ const resetPassword = async () => {
 .footer {
   background: #006B63;
 }
-
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
   .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
   }
-
-  .logo {
-    width: 140px;
-  }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
-  }
-
-  .inputForm {
-    height: 40px;
-    padding: 10px;
+    box-shadow: none;
+    margin-top: -50px;
   }
 
   .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
+  }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
   }
 }
 </style>
