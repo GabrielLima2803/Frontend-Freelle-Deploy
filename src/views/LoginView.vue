@@ -133,7 +133,17 @@ body {
   outline: none;
   transition: all 0.3s;
 }
+.inputForm:focus + .labelForm,
+.inputForm.active + .labelForm {
+  top: -10px;
+  font-size: 12px;
+  color: #006B63;
+}
 
+.labelForm.active {
+  top: -10px;
+  font-size: 12px;
+}
 .labelForm {
   position: absolute;
   top: 50%;
@@ -141,7 +151,6 @@ body {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
-  font-size: 12px;
 }
 
 .btnLogin, .btnCriar {
