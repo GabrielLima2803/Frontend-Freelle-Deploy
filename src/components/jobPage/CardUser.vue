@@ -22,6 +22,7 @@
                 <span class="mdi mdi-school icon"></span> {{ provider.formation }}
             </p>
         </div>
+
     </div>
 </template>
 
