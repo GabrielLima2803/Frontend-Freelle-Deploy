@@ -19,7 +19,7 @@
         <div class="formation">
             <p class="negrito">Formação</p>
             <p>
-                <span class="mdi mdi-school icon"></span> Pós-Graduação
+                <span class="mdi mdi-school icon"></span> {{ provider.formation }}
             </p>
         </div>
     </div>
@@ -27,10 +27,30 @@
 
 
 <script setup>
-import { reactive, onMounted, watch } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { useUserStore } from '@/stores/user'; 
 
-const provider = reactive({
+const userStore = useUserStore()
+function calculateYearsSince(dateString) {
+  const createdAt = new Date(dateString);
+  const currentDate = new Date();
+  const years = currentDate.getFullYear() - createdAt.getFullYear();
+  const month = currentDate.getMonth() - createdAt.getMonth();
+  if (month < 0 || (month === 0 && currentDate.getDate() < createdAt.getDate())) {
+    return years - 1;
+  }
+  return years;
+}
+
+const ratings = reactive([
+  { stars: 5, percentage: 80, count: 150 },
+  { stars: 4, percentage: 50, count: 120 },
+  { stars: 3, percentage: 30, count: 90 },
+  { stars: 2, percentage: 10, count: 40 },
+  { stars: 1, percentage: 5, count: 25 }
+]);
+
+const provider = ref({
   name: "",
   username: "",
   location: "",
@@ -41,40 +61,34 @@ const provider = reactive({
   yearsInPlatform: 0,
   expertise: "",
   about: "",
-  foto: "https://i.ibb.co/DbXfRCv/user-default.png",  
+  foto: "",
+  formation: ""
 });
-
-const ratings = reactive([
-  { stars: 5, percentage: 80, count: 150 },
-  { stars: 4, percentage: 50, count: 120 },
-  { stars: 3, percentage: 30, count: 90 },
-  { stars: 2, percentage: 10, count: 40 },
-  { stars: 1, percentage: 5, count: 25 }
-]);
-
-const userStore = useUserStore();
 
 onMounted(() => {
   const token = localStorage.getItem("authToken"); 
-  if (token) {
-    userStore.getMeUser(token); 
-  }
-});
 
-watch(() => userStore.currentUser, (newUser) => {
-  if (newUser) {
-    provider.name = newUser.name;
-    provider.username = newUser.username;
-    provider.location = newUser.nacionalidade.nome || "Local não especificado";
-    provider.language = newUser.linguagem_principal || "Idioma não especificado";
-    provider.rating = 4.5; 
-    provider.reviews = "14.0k";
-    provider.totalOrders = "29.2"; 
-    provider.yearsInPlatform = 3; 
-    provider.expertise = newUser.especializacao || "Especialização não especificada";
-    provider.about = newUser.biografia || "Sem biografia disponível";
-    provider.foto = newUser.foto ? newUser.foto.url : provider.foto;
-  }
+  userStore.getMeUser(token).then(() => {
+    const user = userStore.currentUser;
+
+    provider.value = {
+      foto: user.foto.url || 'https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png',
+      name: user.name || '',
+      username: user.username || '',
+      location: user.nacionalidade ? user.nacionalidade.nome : '',
+      city: user.nacionalidade ? user.nacionalidade.cidade : '',  
+      language: user.linguagem_principal || '',
+      rating: 4.8,
+      reviews: 120,
+      totalOrders: user.total_pedidos || 0,
+      yearsInPlatform: calculateYearsSince(user.created_at),
+      expertise: user.especializacao || '',
+      about: user.biografia || '',
+      areaAtuacao: user.area_atuacao || 'Gastronomia',
+      formation: user.formacao.nivel_academico || ''
+    };
+    
+  });
 });
 </script>
 

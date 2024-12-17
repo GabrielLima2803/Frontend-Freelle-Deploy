@@ -7,7 +7,7 @@ const authStore = useAuthStore()
 
 const props = defineProps({
   projeto: {
-    type: Object,  // Corrigido para Object, pois cada projeto é um objeto, não um array
+    type: Object,  
     required: true
   }
 })

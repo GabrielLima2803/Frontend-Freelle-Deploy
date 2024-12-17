@@ -73,7 +73,7 @@ export const useUserStore = defineStore('user', () => {
     loadingStore.startLoading();
 
     try {
-      const response = await UserService.getProjetosCandidatados(projetoId, authToken);
+      const response = await UserService.CandidatarVaga(projetoId, authToken);
       state.candidaturaStatus = response.message; 
       state.error = null;
     } catch (error) {
@@ -93,7 +93,7 @@ export const useUserStore = defineStore('user', () => {
     getMeUser,
     updateMeUser,
     error,
-    candidaturaStatus,  // Expose candidatura status
-    candidatarVaga,      // Expose candidatarVaga method
+    candidaturaStatus,  
+    candidatarVaga,    
   };
 });

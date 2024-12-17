@@ -21,6 +21,8 @@ watch(() => route.params.categoriaId, (novoCategoriaId) => {
   categoriaId.value = novoCategoriaId;
   carregarProjetos(novoCategoriaId);  
 });
+
+
 </script>
 
 <template>
@@ -29,9 +31,10 @@ watch(() => route.params.categoriaId, (novoCategoriaId) => {
   <div class="flex">
     <CardUser/>
     <div class="cards-job">
-      <div v-for="projeto in projetosStore.projetosPorCategoria" :key="projeto.id">
-        <CardJob :projeto="projeto" />
-      </div>
+        <div v-for="projeto in projetosStore.projetosPorCategoria.filter(projeto => !projeto.isClosed)" 
+      :key="projeto.id">
+    <CardJob :projeto="projeto" />
+  </div>
     </div>
   </div>
 </template>

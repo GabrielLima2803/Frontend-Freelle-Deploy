@@ -17,7 +17,7 @@ const providers = computed(() => userStore.UsersLimeted);
     <div class="provider-container">
       <div v-for="(provider, index) in providers" :key="index" class="provider-card">
         <div class="provider-left">
-          <img :src="provider.image" alt="Profile Image" class="provider-image" />
+          <img :src="provider.image || 'https://via.placeholder.com/150'" alt="Profile Image" class="provider-image" />
         </div>
         <div class="provider-right">
           <div class="provider-info">
