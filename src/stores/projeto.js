@@ -7,17 +7,19 @@ export const useProjetosStore = defineStore('projeto', () => {
   const state = reactive({
     projetos: [],
     projetosPorCategoria: [],  
+    projetosCandidatados: [],
   })
 
   const projetos = computed(() => state.projetos)
   const projetosPorCategoria = computed(() => state.projetosPorCategoria)  
+  const projetosCandidatados = computed(() => state.projetosCandidatados)
   const loadingStore = useLoadingStore()
 
   const getAllProjetos = async () => {
     loadingStore.startLoading()
     try {
       const data = await ProjetoService.getAllProjetos()
-      state.projetos = data.results
+      state.projetos = data
     } catch (error) {
       console.error('Erro ao buscar projetos:', error)
     } finally {
@@ -76,15 +78,29 @@ export const useProjetosStore = defineStore('projeto', () => {
       loadingStore.stopLoading();
     }
   }
+  const getProjetosCandidatados = async (token) => {
+    loadingStore.startLoading();
+    try {
+      const data = await ProjetoService.getProjetosCandidatados(token);
+      console.log('Projetos candidatados Store:',  data)
+      state.projetosCandidatados = data;
+    } catch (error) {
+      console.error('Erro ao buscar projetos por categoria:', error);
+    } finally {
+      loadingStore.stopLoading();
+    }
+  }
   
 
   return { 
     projetos, 
     projetosPorCategoria, 
+    projetosCandidatados,
     getAllProjetos, 
     createProjeto, 
     deleteProjeto, 
     updateProjeto,
     getProjetosPorCategoria,  
+    getProjetosCandidatados,
   }
 })

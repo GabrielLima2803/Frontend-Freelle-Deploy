@@ -6,6 +6,7 @@ import { CardsComponent, CardJob, CardUser } from '@/components'
 const projetosStore = useProjetosStore()
 
 onMounted(() => {
+  console.log("Projetos" , projetosStore.projetos)
   projetosStore.getAllProjetos()
 })
 </script>

@@ -1,6 +1,19 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user'; 
+
+const userStore = useUserStore();
+
+function calculateYearsSince(dateString) {
+  const createdAt = new Date(dateString);
+  const currentDate = new Date();
+  const years = currentDate.getFullYear() - createdAt.getFullYear();
+  const month = currentDate.getMonth() - createdAt.getMonth();
+  if (month < 0 || (month === 0 && currentDate.getDate() < createdAt.getDate())) {
+    return years - 1;
+  }
+  return years;
+}
 
 const provider = ref({
   name: "",
@@ -16,29 +29,29 @@ const provider = ref({
   foto: "",
 });
 
-const userStore = useUserStore();
-
 onMounted(() => {
   const token = localStorage.getItem("authToken"); 
-  if (token) {
-    userStore.getMeUser(token); 
-  }
-});
 
-watch(() => userStore.currentUser, (newUser) => {
-  if (newUser) {
-    provider.value.name = newUser.name;
-    provider.value.username = newUser.username;
-    provider.value.location = newUser.nacionalidade.nome ? newUser.nacionalidade.nome : "Local não especificado";
-    provider.value.language = newUser.linguagem_principal || "Idioma não especificado";
-    provider.value.rating = 4.5; // Ajuste conforme necessário
-    provider.value.reviews = "14.0k"; // Ajuste conforme necessário
-    provider.value.totalOrders = "29.2"; // Ajuste conforme necessário
-    provider.value.yearsInPlatform = 3; // Ajuste conforme necessário
-    provider.value.expertise = newUser.especializacao || "Especialização não especificada";
-    provider.value.about = newUser.biografia || "Sem biografia disponível";
-    provider.value.foto = newUser.foto ? newUser.foto.url : "https://i.ibb.co/DbXfRCv/user-default.png";
-  }
+  userStore.getMeUser(token).then(() => {
+    const user = userStore.currentUser;
+
+    provider.value = {
+      foto: user.foto.url || 'https://i.ibb.co/Qk43Z1V/icon-freelle-empresa.png',
+      name: user.name || '',
+      username: user.username || '',
+      location: user.nacionalidade ? user.nacionalidade.nome : '', // Verifica se 'nacionalidade' existe
+      city: user.nacionalidade ? user.nacionalidade.cidade : '',  // Verifica se 'nacionalidade' existe
+      language: user.linguagem_principal || '',
+      rating: 4.8,
+      reviews: 120,
+      totalOrders: user.total_pedidos || 0,
+      yearsInPlatform: calculateYearsSince(user.created_at),
+      expertise: user.especializacao || '',
+      about: user.biografia || '',
+      areaAtuacao: user.area_atuacao || 'Gastronomia',
+    };
+    
+  });
 });
 </script>
 
@@ -85,12 +98,13 @@ watch(() => userStore.currentUser, (newUser) => {
 
         <div class="expertise">
           <h3>Expert em:</h3>
-          <p><i class="mdi mdi-palette"></i> {{ provider.expertise }}</p>
+          <p><i class="mdi mdi-palette"></i> {{ provider.areaAtuacao }}</p>
         </div>
       </div>
     </div>   
   </div>
 </template>
+
 <style scoped>
 /* Estilos do componente (igual aos que você já fez) */
 .profile-container {

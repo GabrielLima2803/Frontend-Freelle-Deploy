@@ -40,6 +40,24 @@ class UserService {
             throw error;
           }
         }
+
+        async CandidatarVaga(projetoId, authToken) {
+            try {
+              const response = await axios.post(
+                `/usuarios/${projetoId}/accept_vacancy/`,
+                {},
+                {
+                  headers: {
+                    Authorization: `Bearer ${authToken}`,
+                  },
+                }
+              );
+              return response.data;
+            } catch (error) {
+              console.error("Erro ao se candidatar à vaga:", error);
+              throw error;
+            }
+          }
 }
 
 export default new UserService();
