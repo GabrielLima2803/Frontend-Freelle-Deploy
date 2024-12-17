@@ -5,15 +5,15 @@
   <div id="footerMenu">
     <div class="icons">
       <RouterLink to="/">
-        <i class="mdi mdi-home-outline" />
+        <img src="https://i.ibb.co/FVnJHfy/logo-freelle.png" alt="Loading Logo">
       </RouterLink>
       <RouterLink to="/login">
-        <i class="mdi mdi-account-circle-outline" />
+        <i class="mdi mdi-account-outline"></i>
       </RouterLink>
-      <RouterLink to="/">
+      <RouterLink to="/job-page">
         <i class="mdi mdi-account-search" />
       </RouterLink>
-      <RouterLink to="/">
+      <RouterLink to="/adicao-job">
         <i class="mdi mdi-palette-advanced" />
       </RouterLink>
     </div>
@@ -48,7 +48,22 @@
   transition: color 0.3s;
 }
 
+img {
+  width: 40px; 
+  height: auto; 
+  display: block;
+}
+
+.icons a {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  color: black;
+  transition: color 0.3s;
+}
+
 .icons a:hover {
   color: #006B63; 
 }
+
 </style>

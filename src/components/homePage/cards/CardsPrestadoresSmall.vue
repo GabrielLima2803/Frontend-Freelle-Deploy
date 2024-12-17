@@ -32,10 +32,12 @@ const providers = [
           <img :src="provider.image" alt="Profile Image" class="provider-image" />
         </div>
         <div class="provider-info">
-          <h3>
-            Prestador Pro | {{ provider.role }}
-            <span class="verified-badge"><i class="mdi mdi-checkbox-marked-circle-outline"></i></span>
-          </h3>
+          <router-link :to="'/prestadores/'" class="no-decoration">
+            <h3>
+              Prestador Pro | {{ provider.role }}
+              <span class="verified-badge"><i class="mdi mdi-checkbox-marked-circle-outline"></i></span>
+            </h3>
+          </router-link>
           <p>{{ provider.name }}</p>
           <p>{{ provider.username }}</p>
           <p><i class="mdi mdi-star"></i>{{ provider.rating.toFixed(1) }}</p>
@@ -138,5 +140,9 @@ const providers = [
 
 .btn:hover {
   background-color: #f0f0f0;
+}
+
+.no-decoration {
+  text-decoration: none;
 }
 </style>

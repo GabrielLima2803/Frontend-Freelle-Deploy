@@ -1,19 +1,64 @@
 <script setup>
+import { useAuthStore } from '@/stores/auth';
+import { computed, ref, onMounted} from 'vue';
+
+const authStore = useAuthStore();
+const isLogged = computed(() => authStore.isLogged);
+
+const showMenu = ref(false);
+
+const toggleMenu = () => {
+  showMenu.value = !showMenu.value;
+};
+
+const logout = () => {
+  authStore.logout();
+  showMenu.value = false;
+};
+
+const isSmallScreen = ref(false);
+
+const checkScreenSize = () => {
+  isSmallScreen.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  checkScreenSize();
+  window.addEventListener('resize', checkScreenSize);
+});
 </script>
 
 <template>
-    <div class="header">
-        <div class="header-container">
-            <div class="header-left">
-              <router-link to="/" class="btn"><img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="" class="img"></router-link>
-            </div>
-            <div class="header-right">
-                <button class="btn">Português</button>
-                <router-link to="/login" class="btn">Entrar</router-link>
-                <button class="btn btn-i">Inscrição</button>
-            </div>
+  <div v-if="!isSmallScreen" class="header">
+    <div class="header-container">
+      <div class="header-left">
+        <router-link to="/" class="btn">
+          <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="img" />
+        </router-link>
+      </div>
+      <div class="header-right">
+        <button class="btn">Português</button>
+
+        <div v-if="isLogged" class="user-avatar-container">
+          <button @click="toggleMenu" class="user-avatar-button">
+            <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar" />
+          </button>
+
+          <div v-if="showMenu" class="user-menu">
+            <p @click="logout">Sair</p>
+            <router-link to="/profile">
+              <p>Ver perfil</p>
+            </router-link>
+          </div>
         </div>
+
+        <div v-else class="auth-buttons">
+          <router-link to="/login" class="btn">Freelancer</router-link>
+          <router-link to="/" class="btn btn-i">Empresa</router-link>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -21,17 +66,20 @@
   width: 100%;
   max-width: 1460px;
   height: 4em;
-  margin: 0 auto; 
+  margin: 0 auto;
   padding: 0 1em;
   display: flex;
   justify-content: space-between;
 }
-.header-left{
+
+.header-left {
   display: flex;
+  align-items: center;
 }
+
 .header {
   width: 100%;
-  background-color: #006B63;
+  background-color: #006b63;
   margin: 0;
 }
 
@@ -43,7 +91,7 @@
 .header-right {
   display: flex;
   align-items: center;
-  gap: 4.5em;
+  gap: 2em;
 }
 
 button {
@@ -57,10 +105,15 @@ button {
   cursor: pointer;
   color: white;
 }
-.btn{
-    text-decoration: none;
+
+.btn {
+  text-decoration: none;
   color: white;
+  margin: auto;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
 }
+
 .btn-i {
   border: white 1.5px solid;
   border-radius: 0.5em;
@@ -69,5 +122,51 @@ button {
   padding: 0 1.5em;
   line-height: 2.5em;
   text-align: center;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 2em;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+}
+
+.user-avatar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.user-avatar-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.user-menu {
+  position: absolute;
+  background-color: white;
+  color: #006b63;
+  padding: 1em;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  top: 50px;
+  right: 0;
+}
+
+.user-menu p {
+  cursor: pointer;
+  margin: 0.5em 0;
+}
+
+.user-menu p:hover {
+  color: #005c53;
 }
 </style>

@@ -10,7 +10,6 @@
             <div class="social">
                 <i class="mdi mdi-facebook"></i>
                 <i class="mdi mdi-twitter"></i>
-                <i class="mdi mdi-linkedin"></i>
             </div>
         </div>
         <div class="row"></div>
@@ -42,6 +41,7 @@
     font-weight: bold;
     font-size: 26px;
     padding-left: 15px;
+    color: #D4D4D4;
 }
 .social{
     padding-right: 15px;
@@ -60,7 +60,7 @@
     bottom: 0;
     width: 75%;
     height: 2px;
-    background-color: black;
+    background-color: #D4D4D4;
     transform: translateX(-50%);
 }
 
@@ -70,10 +70,12 @@
 }
 .container-bottom > p {
     font-size: 12px;
+    color: #D4D4D4;
 }
 
 i {
     font-size: 28px;
     margin: 0 5px;
+    color: #D4D4D4;
 }
 </style>

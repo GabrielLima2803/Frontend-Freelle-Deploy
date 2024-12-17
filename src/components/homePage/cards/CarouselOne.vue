@@ -33,10 +33,6 @@ onUnmounted(() => {
       <video autoplay muted loop id="myVideo">
         <source src="https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/v1/video-attachments/generic_asset/asset/4152775255ab950937446041bfcf0a5a-1726568449715/HFW%20PT%20Subs%2016x9" type="video/mp4">
       </video>
-      <div class="search-bar" :class="{ mobile: isMobile }">
-        <input type="text" placeholder="Pesquise por qualquer serviço..." class="search-input" :class="{ mobile: isMobile }">
-        <button class="search-btn"><i class="mdi mdi-magnify" size="90"/></button>
-      </div>
     </div>
   </div>
 
@@ -89,32 +85,6 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 10px;
   align-items: center;
-}
-
-.search-input {
-  width: 700px; 
-  height: 70px;
-  padding: 15px;
-  border-radius: 5px;
-  background: #ccc;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-
-.search-input.mobile {
-  width: 300px; 
-  height: 50px; 
-  padding: 10px; 
-}
-
-.search-btn {
-  padding: 15px 30px;
-  background-color: #006B63;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 20px;
-  cursor: pointer;
 }
 
 .overlay {

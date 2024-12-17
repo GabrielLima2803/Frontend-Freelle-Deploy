@@ -1,8 +1,50 @@
 <script setup>
-import { FooterComponent, HeaderComponent, HeaderSmall, FooterSmall } from "@/components";
-import { ref, onMounted } from 'vue';
+import { FooterComponent, HeaderComponent, FooterSmall } from "@/components";
+import { ref, onMounted} from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth'; 
 
 const isSmallScreen = ref(false);
+const router = useRouter();
+const authStore = useAuthStore();
+
+const username = ref('');
+const email = ref('');
+const password = ref('');
+const passwordConfirm = ref('');
+
+const errorMessage = ref('');
+
+const register = async () => {
+  if (password.value !== passwordConfirm.value) {
+    errorMessage.value = 'As senhas não coincidem!';
+    return;
+  }
+
+  const userData = {
+    username: username.value,
+    email: email.value,
+    password: password.value,
+  };
+
+  try {
+    await authStore.RegisterUser(userData);
+    router.push('/login'); 
+  } catch (error) {
+    errorMessage.value = 'Erro ao registrar usuário. Tente novamente mais tarde.';
+    console.error('Erro no registro:', error);
+  }
+};
+
+const setLabelActive = (inputId) => {
+  const input = document.getElementById(inputId);
+  const label = input.nextElementSibling;
+  if (input.value || input === document.activeElement) {
+    label.classList.add('active');
+  } else {
+    label.classList.remove('active');
+  }
+};
 
 const checkScreenSize = () => {
   isSmallScreen.value = window.innerWidth <= 768;
@@ -15,74 +57,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Header Grande (escondido em telas pequenas) -->
-  <header-component v-if="!isSmallScreen" />
-  <!-- Header Pequeno (exibido apenas em telas pequenas) -->
-  <header-small v-if="isSmallScreen" />
+  <header-component />
 
   <div class="wrapContainer">
-    <div class="FormTop">
-      <img src="https://i.ibb.co/1KNDQpw/Freelee-icon.png" alt="Logo" class="logo" />
-    </div>
     <div class="containerPrincipal">
       <div class="FormBot">
-        <form @submit.prevent="login" class="wrapForm">
-          <!-- "Olá!" alinhado à esquerda -->
+        <form @submit.prevent="register" class="wrapForm">
           <h4 class="TextLeft">Olá!</h4>
-          <!-- Texto "Para continuar, digite seu e-mail" alinhado à esquerda -->
           <p class="FormPLeft">Faça o seu cadastro por aqui!</p>
 
           <div class="input-container">
-            <input
-              type="text"
-              id="username"
-              class="inputForm"
-            />
+            <input type="text" id="username" v-model="username" class="inputForm" @focus="setLabelActive('username')" @blur="setLabelActive('username')" />
             <label for="username" class="labelForm">Digite seu nome...</label>
           </div>
           <div class="input-container">
-            <input
-              type="email"
-              id="email"
-              class="marginForm inputForm"
-            />
+            <input type="email" id="email" v-model="email" class="inputForm" @focus="setLabelActive('email')" @blur="setLabelActive('email')" />
             <label for="email" class="labelForm">Digite seu email...</label>
           </div>
           <div class="input-container">
-            <input
-              type="password"
-              id="password"
-              class="marginForm inputForm"
-            />
+            <input type="password" id="password" v-model="password" class="inputForm" @focus="setLabelActive('password')" @blur="setLabelActive('password')" />
             <label for="password" class="labelForm">Crie sua senha...</label>
           </div>
           <div class="input-container">
-            <input
-              type="password"
-              id="password"
-              class="marginForm inputForm"
-            />
-            <label for="password" class="labelForm">Confirme sua senha...</label>
+            <input type="password" id="password-confirm" v-model="passwordConfirm" class="inputForm" @focus="setLabelActive('password-confirm')" @blur="setLabelActive('password-confirm')" />
+            <label for="password-confirm" class="labelForm">Confirme sua senha...</label>
           </div>
 
-          <router-link to="/cadastro" >
-            <button type="button" style="margin-top: 30px" class="btnCriar mt-3">Criar conta</button>
-          </router-link>
-          <p class="mt-4 FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
+          <button type="submit" class="btnCriar">Criar Login</button>
+
+          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+          <p class="FormP Pf">Protegido por reCAPTCHA - Privacidade | Condições</p>
         </form>
       </div>
     </div>
   </div>
-<div class="footer">
-  <!-- Footer Grande (escondido em telas pequenas) -->
-  <footer-component v-if="!isSmallScreen" />
-  <!-- Footer Pequeno (exibido apenas em telas pequenas) -->
-  <footer-small v-if="isSmallScreen" />
-</div>
+    <footer-component v-if="!isSmallScreen" class="footer" />
+    <footer-small v-if="isSmallScreen" />
 </template>
 
 <style scoped>
-.body {
+body {
   background: #006B63;
   height: 100vh;
   display: flex;
@@ -99,49 +113,50 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
+  min-height: 90vh;
   background: #006B63;
 }
 
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
 .containerPrincipal {
-  width: 440px;
+  width: 760px;
+  height: 660px;
   background-color: white;
-  padding: 40px;
+  padding: 60px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  text-align: center; /* Mantém o restante do formulário centralizado */
+  text-align: center;
 }
 
-.logo {
-  width: 160px;
-}
-
-.TextLeft {
-  font-size: bold;
-  text-align: left; /* Alinha o texto "Olá!" à esquerda */
-}
-
+.TextLeft,
 .FormPLeft {
-  text-align: left; /* Alinha o texto "Para continuar, digite seu e-mail" à esquerda */
+  text-align: left;
 }
 
 .input-container {
   position: relative;
-  margin-top: 30px;
+  margin-top: 35px; 
 }
 
 .inputForm {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 15px;
   border: 1px solid #006B63;
   outline: none;
   transition: all 0.3s;
 }
 
-.inputForm:focus + .labelForm {
+.inputForm:focus + .labelForm,
+.labelForm.active {
   top: -10px;
   font-size: 12px;
+  color: #006B63;
 }
 
 .labelForm {
@@ -151,52 +166,19 @@ onMounted(() => {
   transform: translateY(-50%);
   transition: all 0.3s;
   pointer-events: none;
-}
-
-.labelForm.active {
-  top: -10px;
   font-size: 12px;
 }
 
-.btnLogin, .btnCriar {
+.btnCriar {
   width: 100%;
   height: 45px;
-  margin-top: 15px;
-  font-size: 18px;
+  margin-top: 40px;
+  font-size: 16px;
   font-weight: bold;
-}
-
-.btnLogin {
+  cursor: pointer;
   background-color: #006B63;
+  border: none;
   color: white;
-  border: none;
-}
-
-.btnCriar {
-  background-color: white;
-  border: 2px solid #006B63;
-  color: #006B63;
-  transition: all 0.3s ease; /* Transição para o hover */
-}
-
-.btnCriar:hover {
-  background-color: #006B63; /* Cor de fundo no hover */
-  color: white; /* Cor do texto no hover */
-}
-
-.btnSenha {
-  margin-top: 20px;
-  border: none;
-  border-bottom: solid 1px #006B63;
-  background-color: white;
-  color: gray;
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.btnSenha:hover {
-  color: #006B63;
-  transition: 0.7s;
 }
 
 .Pf {
@@ -208,37 +190,35 @@ onMounted(() => {
   background: #006B63;
 }
 
-/* Estilos para telas pequenas */
 @media (max-width: 768px) {
   .containerPrincipal {
     width: 90%;
     padding: 20px;
+    margin-top: 50px;
   }
 
   .btnLogin, .btnCriar {
     font-size: 16px;
     height: 40px;
   }
-
-  .logo {
-    width: 140px; /* Diminui mais o tamanho da logo em telas pequenas */
-  }
 }
 
 @media (max-width: 576px) {
   .containerPrincipal {
-    width: 80%;
+    width: 85%;
     padding: 15px;
-  }
-
-  .inputForm {
-    height: 40px;
-    padding: 10px;
+    box-shadow: none;
   }
 
   .btnLogin, .btnCriar {
     height: 35px;
     font-size: 14px;
   }
+
+  .wrapContainer {
+    background: white;
+    justify-content: flex-start;
+  }
 }
 </style>
+
