@@ -40,7 +40,7 @@ onMounted(async () => {
 
       await projetoStore.getProjetosCandidatados(token)
       projetosCandidatados.value = projetoStore.projetosCandidatados
-      console.log('Projetos candidatados Component:',  projetoStore.projetosCandidatados)
+      console.log('Projetos candidatados Component:', projetoStore.projetosCandidatados)
     } catch (error) {
       console.error('Erro ao carregar os dados:', error)
     }
@@ -67,7 +67,8 @@ onMounted(async () => {
         <button class="btn">Português</button>
 
         <button @click="toggleMenu" class="user-avatar-button">
-          <img :src="userStore.currentUser?.foto?.url || 'https://via.placeholder.com/40'" alt="User Avatar" class="user-avatar" />
+          <img :src="userStore.currentUser?.foto?.url || 'https://via.placeholder.com/40'" alt="User Avatar"
+            class="user-avatar" />
         </button>
 
         <div v-if="showMenu" class="user-menu">
@@ -82,18 +83,25 @@ onMounted(async () => {
 
   <div v-if="showModal" class="modal">
     <div class="modal-header">
-  <button @click="toggleModal" class="close-button">&larr;</button>
-  <span class="modal-title">Solicitações</span>
-</div>
+      <button @click="toggleModal" class="close-button">&larr;</button>
+      <span class="modal-title">Solicitações</span>
+    </div>
 
     <ul class="modal-body">
       <li v-for="(solicitacao, index) in projetoStore.projetosCandidatados" :key="index" class="solicitacao-item">
-        <img :src="solicitacao.foto?.url || 'https://via.placeholder.com/150'" alt="Avatar" class="solicitacao-avatar" />
+        <img :src="solicitacao.foto?.url || 'https://via.placeholder.com/150'" alt="Avatar"
+          class="solicitacao-avatar" />
         <div class="solicitacao-info">
           <p class="solicitacao-nome">{{ solicitacao.titulo }}</p>
           <p class="solicitacao-email">R$ {{ solicitacao.orcamento }}</p>
         </div>
-        <button class="solicitacao-btn">{{solicitacao.candidatos[0]?.status}}</button>
+        <button v-if="solicitacao.candidatos[0]?.status === 'Selecionado'" class="solicitacao-btn selecionado">
+          Selecionado
+        </button>
+
+        <button v-else class="solicitacao-btn">
+          {{ solicitacao.candidatos[1]?.status || 'Pendente' }}
+        </button>
       </li>
     </ul>
   </div>
@@ -213,7 +221,7 @@ onMounted(async () => {
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .modal-header {
@@ -231,7 +239,7 @@ onMounted(async () => {
   font-size: 1.5em;
   cursor: pointer;
   padding: 0.2em;
-  margin-right: 0.5em; 
+  margin-right: 0.5em;
 }
 
 .modal-title {
@@ -274,21 +282,29 @@ onMounted(async () => {
   font-size: 0.9em;
 }
 
+.solicitacao-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  gap: 1em;
+  margin-bottom: 1.5em;
+  padding: 0.8em;
+}
+
 .solicitacao-btn {
-  width: 200px;
   background-color: #006b63;
   color: white;
   border: none;
   padding: 0.5em 1em;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.8em;
-  margin-top: 70px;
-  margin-left: 80px;
+  font-size: 0.9em;
+  margin: 0; 
 }
 
+
 @media (max-width: 576px) {
-  .header{
+  .header {
     display: none;
   }
 }

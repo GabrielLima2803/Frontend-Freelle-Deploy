@@ -39,7 +39,6 @@ onUnmounted(() => {
   <div class="portfolio">
     <section class="portfolio-section">
       <p class="section-title">Portfólio de projetos</p>
-      <!-- Carrossel para telas pequenas -->
       <div v-if="isSmallScreen" class="carousel">
         <button @click="prevSlide" class="carousel-button">❮</button>
         <div class="carousel-slide">
@@ -47,7 +46,6 @@ onUnmounted(() => {
         </div>
         <button @click="nextSlide" class="carousel-button">❯</button>
       </div>
-      <!-- Galeria para telas grandes -->
       <div v-else class="portfolio-gallery">
         <div class="project-card" v-for="project in projects" :key="project.id">
           <img :src="project.image" :alt="project.title" />

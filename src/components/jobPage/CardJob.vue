@@ -7,7 +7,7 @@ const authStore = useAuthStore()
 
 const props = defineProps({
   projeto: {
-    type: Object,  // Corrigido para Object, pois cada projeto é um objeto, não um array
+    type: Object,  
     required: true
   }
 })
@@ -144,6 +144,7 @@ const applyForJob = async (projetoId) => {
 .info {
   padding: 16px;
   text-align: center;
+  min-width: 1200px;
 }
 
 .action {

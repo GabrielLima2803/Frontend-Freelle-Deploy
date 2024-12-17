@@ -22,7 +22,7 @@ onMounted(() => {
         <div class="flex">
             <CardUser/>
             <div class="cards-job">
-                <h1 class="title">Melhor Raking</h1>
+                <h1 class="title">Melhor Ranking</h1>
                 <div v-for="projeto in projetosStore.projetos.slice(0, 3)" :key="projeto.id">
                     <CardJob :projeto="projeto" />
                 </div>
