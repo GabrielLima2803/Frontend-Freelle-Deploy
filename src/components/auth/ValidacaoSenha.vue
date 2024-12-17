@@ -88,7 +88,7 @@ const resetPassword = async () => {
               v-model="resetData.new_password"
               required
             />
-            <label for="password" class="labelForm">Crie sua nova senha...</label>
+            <label for="password" :class="{'active': username !== ''}" class="labelForm">Crie sua nova senha...</label>
           </div>
 
           <div class="input-container">
@@ -99,7 +99,7 @@ const resetPassword = async () => {
               v-model="resetData.confirmPassword"
               required
             />
-            <label for="confirmPassword" class="labelForm">Confirme sua nova senha...</label>
+            <label for="confirmPassword" :class="{'active': username !== ''}" class="labelForm">Confirme sua nova senha...</label>
           </div>
 
           <button type="submit" class="btnAtualizar mt-3">Atualizar</button>
@@ -163,6 +163,7 @@ const resetPassword = async () => {
   outline: none;
   transition: all 0.3s;
 }
+
 
 .inputForm:focus + .labelForm,
 .labelForm.active {
