@@ -144,6 +144,7 @@ const applyForJob = async (projetoId) => {
 .info {
   padding: 16px;
   text-align: center;
+  min-width: 1200px;
 }
 
 .action {
