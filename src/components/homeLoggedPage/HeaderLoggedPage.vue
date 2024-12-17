@@ -3,8 +3,9 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/user'
-
+import { useProjetosStore } from '@/stores'
 const authStore = useAuthStore()
+const projetoStore = useProjetosStore()
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -25,21 +26,24 @@ const logout = () => {
   router.push('/')
 }
 
-const solicitacoes = ref([
-  { nome: 'Supera', email: 'supera@gmail.com', avatar: 'https://via.placeholder.com/50' },
-  { nome: 'Supera', email: 'supera@gmail.com', avatar: 'https://via.placeholder.com/50' },
-  { nome: 'Supera', email: 'supera@gmail.com', avatar: 'https://via.placeholder.com/50' },
-  { nome: 'Supera', email: 'supera@gmail.com', avatar: 'https://via.placeholder.com/50' }
-])
 
-onMounted(() => {
+
+const projetosCandidatados = ref([])
+
+onMounted(async () => {
   const token = localStorage.getItem('authToken')
+
   if (token) {
-    userStore.getMeUser(token).then(() => {
+    try {
+      await userStore.getMeUser(token)
       console.log('Usuário carregado:', userStore.currentUser)
-    }).catch(error => {
-      console.error('Erro ao carregar o usuário:', error)
-    })
+
+      await projetoStore.getProjetosCandidatados(token)
+      projetosCandidatados.value = projetoStore.projetosCandidatados
+      console.log('Projetos candidatados Component:',  projetoStore.projetosCandidatados)
+    } catch (error) {
+      console.error('Erro ao carregar os dados:', error)
+    }
   }
 })
 </script>
@@ -57,7 +61,7 @@ onMounted(() => {
         <div class="solicitacoes" @click="toggleModal">
           <span class="mdi mdi-account-circle icon"></span>
           <span>Solicitações</span>
-          <span class="badge">{{ solicitacoes.length }}</span>
+          <span class="badge">{{ projetoStore.projetosCandidatados.length }}</span>
         </div>
 
         <button class="btn">Português</button>
@@ -83,13 +87,13 @@ onMounted(() => {
 </div>
 
     <ul class="modal-body">
-      <li v-for="(solicitacao, index) in solicitacoes" :key="index" class="solicitacao-item">
-        <img :src="solicitacao.avatar" alt="Avatar" class="solicitacao-avatar" />
+      <li v-for="(solicitacao, index) in projetoStore.projetosCandidatados" :key="index" class="solicitacao-item">
+        <img :src="solicitacao.foto?.url || 'https://via.placeholder.com/150'" alt="Avatar" class="solicitacao-avatar" />
         <div class="solicitacao-info">
-          <p class="solicitacao-nome">{{ solicitacao.nome }}</p>
-          <p class="solicitacao-email">{{ solicitacao.email }}</p>
+          <p class="solicitacao-nome">{{ solicitacao.titulo }}</p>
+          <p class="solicitacao-email">R$ {{ solicitacao.orcamento }}</p>
         </div>
-        <button class="solicitacao-btn">SOLICITAÇÃO ACEITA</button>
+        <button class="solicitacao-btn">{{solicitacao.candidatos[0]?.status}}</button>
       </li>
     </ul>
   </div>

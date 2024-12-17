@@ -1,9 +1,13 @@
 <script setup>
-import { defineProps, ref, onMounted } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { defineProps, ref, onMounted, computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+const userStore = useUserStore()
+const authStore = useAuthStore()
 
 const props = defineProps({
   projeto: {
-    type: Object,
+    type: Object,  // Corrigido para Object, pois cada projeto é um objeto, não um array
     required: true
   }
 })
@@ -28,15 +32,59 @@ onMounted(() => {
 
   return () => window.removeEventListener('resize', checkIfMobile)
 })
+
+const calculateVagas = (candidatos, maxCandidates) => {
+  const currentCandidates = candidatos && candidatos.length > 0 ? candidatos.length : 0;
+  return `${currentCandidates}/${maxCandidates}`;
+};
+
+const vagas = computed(() => {
+  return calculateVagas(props.projeto.candidatos, props.projeto.max_candidates);
+});
+
+const formatMonth = (month) => {
+  const months = [
+    "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
+  ];
+  return months[month - 1];
+};
+
+const formatDateRange = (startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  const startFormatted = `${formatMonth(start.getMonth() + 1)} ${start.getDate()}`;
+  const endFormatted = `${end.getDate()} ${formatMonth(end.getMonth() + 1)}`;
+
+  return `${startFormatted} / ${endFormatted}`;
+};
+
+const formattedDateRange = formatDateRange(
+  props.projeto.data_publicada,
+  props.projeto.prazo_entrega
+);
+
+
+const applyForJob = async (projetoId) => {  
+  try {
+    const token = authStore.token
+    await userStore.candidatarVaga(projetoId, token);
+    console.log('Candidatura realizada para o projeto:', props.projeto.titulo);
+    alert('Você se candidatou à vaga!');
+  } catch (error) {
+    console.error('Erro ao se candidatar:', error);
+    alert('Ocorreu um erro ao enviar sua candidatura.');
+  }
+};
 </script>
 
 <template>
   <div v-if="props.projeto" class="container-rectangle">
     <div class="box-img">
-      <img :src="props.projeto.image_project.url" alt="Imagem do item" />
+      <img :src="projeto.foto?.url || 'https://via.placeholder.com/150'" alt="Imagem do item" />
       <div class="overlay-info" v-if="isMobile && showMore">
-        <p class="overlay-text vagas">Vagas: {{ props.projeto.vagas }} / {{ props.projeto.max_vagas }}</p>
-        <p class="overlay-text salario">Salário: R$ {{ props.projeto.salario }}</p>
+        <p class="overlay-text vagas">Vagas: {{ vagas}}</p>
+        <p class="overlay-text salario">Salário: R$ {{ props.projeto.orcamento }}</p>
       </div>
     </div>
 
@@ -44,7 +92,7 @@ onMounted(() => {
       <h3 class="title">{{ props.projeto.titulo }}</h3>
       <div class="details">
         <p class="date-category">
-          JUNE 25 / 1 AGOS | {{ props.projeto.categoria[0]?.nome || 'CULINÁRIA' }}
+        {{ formattedDateRange }} | {{ props.projeto.categoria[0]?.nome || 'CULINÁRIA' }}
         </p>
       </div>
       <p class="description">
@@ -55,7 +103,7 @@ onMounted(() => {
         }}
       </p>
       <div class="action" v-if="showMore">
-        <button class="accept">ACEITAR</button>
+        <button class="accept" @click="applyForJob(props.projeto.id)">ACEITAR</button>
       </div>
     </div>
 

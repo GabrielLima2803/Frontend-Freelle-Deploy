@@ -30,7 +30,7 @@ const userData = ref({
   biografia: '',
   especializacao: '',
   foto: '',
-  formacao: null
+  // formacao: null
 });
 
 const handleFileUpload = (event) => {
@@ -54,7 +54,7 @@ const updateProfile = async () => {
     formData.append('email', userData.value.email);
     formData.append('biografia', userData.value.biografia);
     formData.append('especializacao', userData.value.especializacao);
-    formData.append('formacao', userData.value.formacao);
+    // formData.append('formacao', userData.value.formacao);
 
     if (userData.value.foto) {
       formData.append('foto', userData.value.foto);
@@ -108,14 +108,14 @@ const updateProfile = async () => {
             <input type="text" id="especializacao" class="inputForm" v-model="userData.especializacao" placeholder="Informe sua área de atuação...  " />
           </div>
 
-          <div class="input-container">
+          <!-- <div class="input-container">
             <label for="formacao">Formação</label>
             <input type="text" id="formacao" class="inputForm" v-model="userData.formacao" placeholder="Digite sua formação... " />
-          </div>
+          </div> -->
+                <button type="submit" class="btn-submit">CONFIRMAR ALTERAÇÕES</button>
         </form>
       </div>
       
-                <button type="submit" class="btn-submit">CONFIRMAR ALTERAÇÕES</button>
 
       <p class="privacy">Protegido por reCAPTCHA - <a href="#">Privacidade</a> | <a href="#">Condições</a></p>
     </div>

@@ -3,7 +3,6 @@ import { UpdateProfile } from "@/components";
 </script>
 
 <template>
-  <RouterView/>
   <UpdateProfile/>
 </template>
 
