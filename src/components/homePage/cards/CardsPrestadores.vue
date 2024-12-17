@@ -2,7 +2,11 @@
 import { onMounted, computed } from 'vue';
 import { useUserStore } from '@/stores/user';
 
+
+
+
 const userStore = useUserStore();
+
 
 onMounted(async () => {
   await userStore.getAllUsers();
@@ -35,7 +39,10 @@ const providers = computed(() => userStore.UsersLimeted);
             <button class="btn">
               <i class="mdi mdi-heart-outline"></i>
             </button>
+        
             <button class="btn">Ver Perfil</button>
+         
+          
           </div>
           <div class="provider-social">
             <a :href="provider.linkedin" target="_blank" class="no-decoration">
